@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Property Listing Managers
+  p1 Hi #{manager.name}
+
+  h2 Guests list
+  ul#guests.list-view
+    each guest in guests
+      li.list-item=guest.name
