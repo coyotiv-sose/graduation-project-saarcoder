@@ -4,10 +4,13 @@ const axios = require('axios')
 // This brings in the raw data (an object array) from the get method defined at that other route, to log it into the console
 axios.get('http://localhost:3000/guests').then(res => console.log(res.data))
 
-// create a new guest through HTTP API with axios (fails, as of now)
-axios
-  .post('http://localhost:3000/guests', { name: 'Gianni' })
-  .then(response => {
-    console.log(response.data)
-  })
-  .catch(e => console.log(e.message))
+// create a new guest through HTTP API with axios
+async function main() {
+  const guest = await axios
+    .post('http://localhost:3000/guests', { name: 'Gianni' })
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(e => console.log(e.message))
+}
+main()
