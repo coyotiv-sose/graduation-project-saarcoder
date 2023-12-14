@@ -1,4 +1,6 @@
 const axios = require('axios')
 
-// fetch guests with axios
-axios.get('http://localhost:3000/guests').then(response => console.log(response.data))
+console.log('still nothing inside')
+
+// fetch guests from a localhost server endpoint at route 'guests' with axios
+axios.get('http://localhost:4000/guests').then(res => console.log(res.data))
