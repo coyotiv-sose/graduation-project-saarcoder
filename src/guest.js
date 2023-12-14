@@ -15,5 +15,13 @@ class Guest {
     }
     this.name = newName
   }
+
+  static create({ name }) {
+    const newUser = new Guest(name)
+    Guest.list.push(newUser)
+    return newUser
+  }
+
+  static list = []
 }
 module.exports = Guest

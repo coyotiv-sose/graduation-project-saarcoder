@@ -5,7 +5,7 @@ const router = express.Router()
 
 /* GET guests listing. */
 router.get('/', (req, res) => {
-  res.send([{ name: 'Tiny Tim' }, { name: 'The GobbledyWook' }, { name: 'Chuck Norris' }])
+  res.send(Guest.list)
 })
 
 /* Create a new guest */
@@ -15,7 +15,8 @@ router.post('/', (req, res) => {
   // res.send({ name: req.body.name })
 
   // creating the new guest with the value obtained from the request:
-  const guest = new Guest(req.body.name)
+  // const guest = new Guest(req.body.name)
+  const guest = Guest.create(req.body)
   res.send(guest)
 })
 

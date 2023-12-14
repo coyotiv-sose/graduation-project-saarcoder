@@ -6,11 +6,21 @@ axios.get('http://localhost:3000/guests').then(res => console.log(res.data))
 
 // create a new guest through HTTP API with axios
 async function main() {
-  const guest = await axios
+  const gianni = await axios
     .post('http://localhost:3000/guests', { name: 'Gianni' })
     .then(response => {
       console.log(response.data)
     })
     .catch(e => console.log(e.message))
+
+  const tosh = await axios
+    .post('http://localhost:3000/guests', { name: 'Tosh' })
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(e => console.log(e.message))
+
+  const allGuests = await axios.get('http://localhost:3000/guests')
+  console.log('List of all users', allGuests.data)
 }
 main()
