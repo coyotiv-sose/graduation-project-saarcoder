@@ -16,7 +16,8 @@ router.post('/', (req, res) => {
 
   // creating the new guest with the value obtained from the request:
   // const guest = new Guest(req.body.name)
-  const guest = Guest.create(req.body)
+  // const guest = Guest.create(req.body)
+  const guest = Guest.create({ name: req.body.name })
   res.send(guest)
 })
 
