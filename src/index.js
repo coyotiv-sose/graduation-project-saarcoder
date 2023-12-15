@@ -11,6 +11,6 @@ async function main() {
   await axios.post('http://localhost:3000/guests', { name: 'Tosh' })
 
   const allGuests = await axios.get('http://localhost:3000/guests')
-  console.log('List of all users', allGuests.data)
+  console.log('List of all guests', allGuests.data)
 }
 main()
