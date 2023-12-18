@@ -6,7 +6,7 @@ const axios = require('axios')
 
 // create a new guest through HTTP API with axios
 async function main() {
-  await axios.post('http://localhost:3000/guests', { name: 'Gianni', hacked: true })
+  await axios.post('http://localhost:3000/guests', { name: 'Gianni' })
 
   await axios.post('http://localhost:3000/guests', { name: 'Tosh' })
 
