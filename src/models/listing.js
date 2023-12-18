@@ -1,13 +1,8 @@
-const owner = require('./owner')
-
 class Listing {
-  constructor(objName, objId, location, region, country, ownerId) {
-    this.id = objId
-    this.name = objName
-    this.owner = ownerId
+  constructor(owner, name, location) {
+    this.owner = owner
+    this.name = name
     this.location = location
-    this.region = region
-    this.country = country
   }
 }
 module.exports = Listing
