@@ -17,7 +17,7 @@ class User {
   }
 
   createOffer(listing, startString, checkIn, endString, checkOut, price) {
-    // TODO: Check if the current user has permission to create an offer (isOwner = true)
+    // check if the user (still) has that listing in his listings list
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
       const initiator = this.last
@@ -25,18 +25,27 @@ class User {
       let [endDay, endMonth, endYear] = endString.split('.')
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
-      console.log(start, end)
-      // destructuring only works with exact same names as in expected object keys
       const offer = Offer.create({ initiator, listing, start, end, price })
       this.offers.push(offer)
     }
   }
 
-  createAuction(listing, auctionName, publishFrom, initiator = this.last) {
+  createAuction(listing, auctionName, timeString, initiator = this.last) {
     const listingNames = this.listings.map(el => el.name)
+    let [day, month, year] = timeString.split('.')
+    const publishFrom = new Date(year, (month -= 1), day)
     if (listingNames.includes(listing)) {
       const auction = Auction.create({ initiator, listing, auctionName, publishFrom })
       this.auctions.push(auction)
+    }
+  }
+
+  removeAuction(listing, auction) {
+    const listingNames = this.listings.map(el => el.name)
+    const auctionNames = this.auctions.map(el => el.auctionName)
+    console.log(listingNames, auctionNames)
+    if (listingNames.includes(listing) && auctionNames.includes(auction)) {
+      this.auctions.splice(auctionNames.indexOf(auction), 1)
     }
   }
 

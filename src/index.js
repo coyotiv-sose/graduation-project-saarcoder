@@ -22,15 +22,11 @@ main()
 const ron = new User('Ron', 'Johnson')
 ron.createListing('The Green House', 'Olive Beach, California')
 
+// getting date and time values for the timestamp from separate user input fields:
 ron.createOffer('The Green House', '20.12.2023', '17', '28.12.2023', '09', 350)
 
-// Test timestamp locally
-let [startDay, startMonth, startYear] = '20.12.2024'.split('.')
-console.log(startDay, startMonth, startYear)
-const startDate = new Date(startYear, (startMonth -= 1), startDay, '17')
-let [endDay, endMonth, endYear] = '28.12.2024'.split('.')
-const endDate = new Date(endYear, (endMonth -= 1), endDay, '09')
-console.log('start (local): ', startDate, ', end (local): ', endDate)
-
+// Year works with YY and YYYY inputs!
 ron.createAuction('The Green House', 'Spring offer', '04.08.24')
+
+// ron.removeAuction('The Green House', 'Spring offer')
 console.log(ron)
