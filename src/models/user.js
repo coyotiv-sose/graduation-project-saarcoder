@@ -18,7 +18,10 @@ class User {
 
   // using Offer.create, because we want to not just use the constructor, but also use the static list field of an offer object instance
   createOffer(listing, start, checkIn, end, checkOut, price) {
-    if (this.listings.includes(listing)) {
+    // Check if the current user has permission AND the lister for which he wants to place an offer is in his list of listings
+    const names = this.listings.map(el => el.name)
+    console.log(names)
+    if (names.includes(listing)) {
       // cannot use this here, different scope. Also: does parameter destructuring work this way, with the object literal passed in here as single argument? The static method expects an object, and one that has an "initiator" key, not a "name" key/property
       const initiator = this.last
       let [startDay, startMonth, startYear] = start.split('.')
