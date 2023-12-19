@@ -1,5 +1,8 @@
 const axios = require('axios')
 const User = require('./models/user')
+const Listing = require('./models/listing')
+const Offer = require('./models/offer')
+const Auction = require('./models/auction')
 
 // fetch guests from a localhost server endpoint at route different route, 'guests' with axios, with a Promise (but no async function as of now)
 // This brings in the raw data (an object array) from the get method defined at that other route, to log it into the console
@@ -18,6 +21,11 @@ main()
 
 const ron = new User('Ron', 'Johnson')
 ron.createListing('The Green House', 'Olive Beach, California')
-// This has listings as [Circular *1], does it need to async/await? No, the listing object held inside the user's listing array itself has the user object as a property, which itself has the user's listings array.
-// Therefore, the listing objects should not include the owner as an object, but just as a name, and the list arrays in the user should not contain the full objects (listings, offers, auctions), but just names or ids
 console.log(ron.listings)
+ron.createOffer('The Green House', '20.12.2023', '17', '28.12.2023', '09', 350)
+console.log(ron.offers)
+// Test timestamp
+/* let [startDay, startMonth, startYear] = '20.12.2023'.split('.')
+console.log(startDay, startMonth, startYear)
+const startDate = new Date(startYear, (startMonth -= 1), startDay, '17')
+console.log(startDate) */
