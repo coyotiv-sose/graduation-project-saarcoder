@@ -27,7 +27,7 @@ class User {
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
       console.log(start, end)
       // destructuring only works with exact same names as in expected object keys
-      const offer = Offer.create({ initiator, listing, start, checkIn, end, checkOut, price })
+      const offer = Offer.create({ initiator, listing, start, end, price })
       this.offers.push(offer)
     }
   }

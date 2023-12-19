@@ -1,13 +1,13 @@
 class Auction {
-  constructor(listing, name, start, end) {
+  constructor(listing, auctionName, start, end) {
     this.listing = listing
-    this.name = name
+    this.auctionName = auctionName
     this.start = start
     this.end = end
   }
 
-  static create({ listing, name, start, end }) {
-    const auction = new Auction(listing, name, start, end)
+  static create({ listing, auctionName, start, end }) {
+    const auction = new Auction(listing, auctionName, start, end)
     Auction.list.push(auction)
     return auction
   }
