@@ -15,6 +15,8 @@ async function main() {
   console.log('List of all guests', allGuests.data)
 }
 main()
+
 const ron = new User('Ron', 'Johnson')
 ron.createListing('The Green House', 'Olive Beach, California')
+// this has listings as [Circular *1], does it need to async/await?
 console.log(ron.listings)
