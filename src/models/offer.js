@@ -12,8 +12,8 @@ class Offer {
     this.minPrice = price
   }
 
-  static create({ initiator, listing, start, end, price }) {
-    const offer = new Offer(initiator, listing, start, end, price)
+  static create({ initiator, listing, start, checkIn, end, checkOut, price }) {
+    const offer = new Offer(initiator, listing, start, checkIn, end, checkOut, price)
     Offer.list.push(offer)
     return offer
   }
