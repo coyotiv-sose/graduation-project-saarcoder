@@ -22,9 +22,8 @@ main()
 const ron = new User('Ron', 'Johnson')
 ron.createListing('The Green House', 'Olive Beach, California')
 
-// console.log(ron.listings)
 ron.createOffer('The Green House', '20.12.2023', '17', '28.12.2023', '09', 350)
-// check if user is updated with offers list
+// check if user is updated with full offers list:
 console.log(ron)
 
 // Test timestamp locally
