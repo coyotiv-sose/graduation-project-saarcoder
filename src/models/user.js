@@ -12,7 +12,7 @@ class User {
   }
 
   createListing(name, location) {
-    const listing = new Listing(this, name, location)
+    const listing = new Listing(this.last, name, location)
     this.listings.push(listing)
   }
 
