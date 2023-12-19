@@ -19,7 +19,7 @@ class User {
   // using Offer.create, because we want to not just use the constructore, but also use the static list field of an offer object instance
   createOffer(name, listing, start, end, price) {
     if (this.listings.includes(listing)) {
-      // cannot use this here, different scope, but parameter destructuring will not work with the object literal passed in here, because the expected object does not have a "name" property/key
+      // cannot use this here, different scope. Also: does parameter destructuring work this way, with the object literal passed in here as single argument? The static method expects an object, and one that has an "initiator" key, not a "name" key/property
       const offer = Offer.create({ name, listing, start, end, price })
       this.offers.push(offer)
     }
@@ -33,9 +33,10 @@ class User {
   }
 
   startAuction(name) {
-    const auction = this.auctions.map(el => el.name === name)
-    // Is this not just changing state in memory and discard it again right afterwards, so that it can just be used for Axios data transport? Why is this then not just using the User object?
+    const auction = this.auctions.filter(el => el.name === name)
     auction.active = true
+    // does this make any sense? activeList is just an array within an auction object that uses it, which sits in any user objects auctions list.
+    // This should produce a personal list of active offers of a single user, which should be added to the user object's auctions array. Ask someone if this is an infinite loop!
     Auction.activelist.push(auction)
   }
 

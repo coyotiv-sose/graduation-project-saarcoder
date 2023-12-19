@@ -20,5 +20,5 @@ router.post('/', (req, res) => {
   const guest = Guest.create({ name: req.body.name })
   res.send(guest)
 })
-
+// Should this not rather be exported as guestsRouter?
 module.exports = router
