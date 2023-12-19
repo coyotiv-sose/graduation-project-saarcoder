@@ -21,11 +21,16 @@ main()
 
 const ron = new User('Ron', 'Johnson')
 ron.createListing('The Green House', 'Olive Beach, California')
-console.log(ron.listings)
+
+// console.log(ron.listings)
 ron.createOffer('The Green House', '20.12.2023', '17', '28.12.2023', '09', 350)
-console.log(ron.offers)
-// Test timestamp
-/* let [startDay, startMonth, startYear] = '20.12.2023'.split('.')
+// check if user is updated with offers list
+console.log(ron)
+
+// Test timestamp locally
+let [startDay, startMonth, startYear] = '20.12.2023'.split('.')
 console.log(startDay, startMonth, startYear)
 const startDate = new Date(startYear, (startMonth -= 1), startDay, '17')
-console.log(startDate) */
+let [endDay, endMonth, endYear] = '28.12.2023'.split('.')
+const endDate = new Date(endYear, (endMonth -= 1), endDay, '09')
+console.log('start (local): ', startDate, ', end (local): ', endDate)

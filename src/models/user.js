@@ -28,7 +28,7 @@ class User {
       console.log(startDate, endDate)
       const offer = Offer.create({ initiator, listing, startDate, checkIn, endDate, checkOut, price })
       this.offers.push(offer)
-    }
+    } else console.log('function not running because includes check cannot work this way, obviously')
   }
 
   createAuction(listing, name, start, end) {
