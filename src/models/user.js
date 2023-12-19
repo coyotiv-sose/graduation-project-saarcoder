@@ -27,17 +27,9 @@ class User {
 
   createAuction(listing, name, start, end) {
     if (this.listings.includes(listing)) {
-      const auction = new Auction(listing, name, start, end)
+      const auction = Auction.create({ listing, name, start, end })
       this.auctions.push(auction)
     }
-  }
-
-  startAuction(name) {
-    const auction = this.auctions.filter(el => el.name === name)
-    auction.active = true
-    // does this make any sense? activeList is just an array within an auction object that uses it, which sits in any user objects auctions list.
-    // This should produce a personal list of active offers of a single user, which should be added to the user object's auctions array. Ask someone if this is an infinite loop!
-    Auction.activelist.push(auction)
   }
 
   addEmail(email, password) {

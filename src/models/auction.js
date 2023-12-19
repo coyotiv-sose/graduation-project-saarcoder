@@ -4,14 +4,16 @@ class Auction {
     this.name = name
     this.start = start
     this.end = end
-    this.active = false
   }
 
   static create({ listing, name, start, end }) {
-    const active = new Auction(listing, name, start, end)
-    Auction.activelist.push(active)
+    const auction = new Auction(listing, name, start, end)
+    Auction.list.push(auction)
+    // returning the object WITH the (active) list
+    // there should not be a list with non active Auctions
+    return auction
   }
 
-  static activelist = []
+  static list = []
 }
 module.exports = Auction
