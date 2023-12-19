@@ -30,6 +30,7 @@ class User {
     }
   }
 
+  // TODO: let the listing in an auction be an array
   createAuction(listing, auctionName, timeString, initiator = this.last) {
     const listingNames = this.listings.map(el => el.name)
     let [day, month, year] = timeString.split('.')
@@ -40,8 +41,9 @@ class User {
     }
   }
 
+  // TODO: let the listing in an auction be an array
   removeAuction(listing, auction) {
-    const listingNames = this.listings.map(el => el.name)
+    const listingNames = this.auctions.map(el => el.listing)
     const auctionNames = this.auctions.map(el => el.auctionName)
     console.log(listingNames, auctionNames)
     if (listingNames.includes(listing) && auctionNames.includes(auction)) {
