@@ -18,5 +18,6 @@ main()
 
 const ron = new User('Ron', 'Johnson')
 ron.createListing('The Green House', 'Olive Beach, California')
-// this has listings as [Circular *1], does it need to async/await?
+// This has listings as [Circular *1], does it need to async/await? No, the listing object held inside the user's listing array itself has the user object as a property, which itself has the user's listings array.
+// Therefore, the listing objects should not include the owner as an object, but just as a name, and the list arrays in the user should not contain the full objects (listings, offers, auctions), but just names or ids
 console.log(ron.listings)
