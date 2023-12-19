@@ -32,9 +32,10 @@ class User {
     }
   }
 
-  createAuction(listing, name, start, end) {
-    if (this.listings.includes(listing)) {
-      const auction = Auction.create({ listing, name, start, end })
+  createAuction(listing, auctionName, publishFrom, initiator = this.last) {
+    const listingNames = this.listings.map(el => el.name)
+    if (listingNames.includes(listing)) {
+      const auction = Auction.create({ initiator, listing, auctionName, publishFrom })
       this.auctions.push(auction)
     }
   }

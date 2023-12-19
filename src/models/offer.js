@@ -7,12 +7,12 @@ class Offer {
     this.minPrice = price
   }
 
+  static list = []
+
   static create({ initiator, listing, start, end, price }) {
     const offer = new Offer(initiator, listing, start, end, price)
     Offer.list.push(offer)
     return offer
   }
-
-  static list = []
 }
 module.exports = Offer
