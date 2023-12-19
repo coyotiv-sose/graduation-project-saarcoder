@@ -10,7 +10,7 @@ class Auction {
     const auction = new Auction(listing, name, start, end)
     Auction.list.push(auction)
     // returning the object WITH the (active) list
-    // there should not be a list with non active Auctions
+    // there should not be a list with non active auctions
     return auction
   }
 

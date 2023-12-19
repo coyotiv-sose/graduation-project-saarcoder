@@ -1,4 +1,5 @@
 const axios = require('axios')
+const User = require('./models/user')
 
 // fetch guests from a localhost server endpoint at route different route, 'guests' with axios, with a Promise (but no async function as of now)
 // This brings in the raw data (an object array) from the get method defined at that other route, to log it into the console
@@ -14,3 +15,6 @@ async function main() {
   console.log('List of all guests', allGuests.data)
 }
 main()
+const ron = new User('Ron', 'Johnson')
+ron.createListing('The Green House', 'Olive Beach, California')
+console.log(ron.listings)
