@@ -1,6 +1,5 @@
 const Listing = require('./listing')
 const Offer = require('./offer')
-// const Auction = require('./auction')
 
 class User {
   constructor(firstName, lastName) {
@@ -8,7 +7,6 @@ class User {
     this.last = lastName
     this.listings = []
     this.offers = []
-    this.auctions = []
   }
 
   createListing(name, location) {
@@ -30,11 +28,10 @@ class User {
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
       const offer = Offer.create({ initiator, listing, offerName, start, end, price, currency, toAuction })
       this.offers.push(offer)
-    } else console.log('Please add your listing first, then enter the offer period')
+    } else throw new Error('Please add your listing first, then enter the offer period')
   }
 
-  updateOfferForAuction(offer, auction) {
-    // offer names will be replaced by ids later, so no need for further checks at this point
+  updateOfferAddAuction(offer, auction) {
     const selected = this.offers.filter(el => el.offerName === offer)[0]
     selected.addAuctionProp(auction)
   }
@@ -43,11 +40,11 @@ class User {
     const selected = this.offers.filter(el => el.offerName === offer)[0]
     selected.removeAuctionProp()
   }
-  /*
-    lookupListingsInAuction(auction) {
-      console.log(this.auctions.filter(el => el.auctionName === auction))
-      return this.auctions.filter(el => el.auctionName === auction)
-    } */
+
+  lookupListingsInAuction(auction) {
+    const searchList = this.offers.filter(el => el.auction === auction)
+    return searchList
+  }
 
   addEmail(email, password) {
     this.email = email
