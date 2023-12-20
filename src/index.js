@@ -21,10 +21,11 @@ main()
 
 const ron = new User('Ron', 'Johnson')
 ron.createListing('The Green House', 'Olive Beach, California')
+ron.createListing('Blue Hills', 'Appalachian Creek, Dusty Mills')
 
 // getting date and time values for the timestamp from separate user input fields:
-ron.createOffer('The Green House', '20.12.2023', '17', '28.12.2023', '09', 350)
-
+ron.createOffer('The Green House', '20.12.2023', '17', '28.12.2023', '09', 350, 'Yen')
+ron.createOffer('Blue Hills', '01.04.2024', '19', '08.04.2024', '10', 575, 'SF')
 // Year works with YY and YYYY inputs!
 ron.createAuction('The Green House', 'Spring offer', '04.08.24')
 

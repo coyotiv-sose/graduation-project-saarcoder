@@ -16,7 +16,7 @@ class User {
     this.listings.push(listing)
   }
 
-  createOffer(listing, startString, checkIn, endString, checkOut, price) {
+  createOffer(listing, startString, checkIn, endString, checkOut, price, currency = '$') {
     // check if the user (still) has that listing in his listings list
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
@@ -25,9 +25,9 @@ class User {
       let [endDay, endMonth, endYear] = endString.split('.')
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
-      const offer = Offer.create({ initiator, listing, start, end, price })
+      const offer = Offer.create({ initiator, listing, start, end, price, currency })
       this.offers.push(offer)
-    }
+    } else console.log('Please add your listing first, then enter the offer period')
   }
 
   // TODO: let the listing in an auction be an array

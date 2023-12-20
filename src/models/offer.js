@@ -10,8 +10,8 @@ class Offer {
 
   static list = []
 
-  static create({ initiator, listing, start, end, price }) {
-    const offer = new Offer(initiator, listing, start, end, price)
+  static create({ initiator, listing, start, end, price, currency }) {
+    const offer = new Offer(initiator, listing, start, end, price, currency)
     Offer.list.push(offer)
     return offer
   }
