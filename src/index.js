@@ -25,6 +25,7 @@ ron.createListing('Blue Hills', 'Appalachian Creek, Dusty Mills')
 
 // getting date and time values for the timestamp from separate user input fields:
 ron.createOffer('The Green House', 'Christmas Rental', '20.12.2023', '17', '28.12.2023', '09', 350)
+ron.createOffer('The Green House', 'Spring Rental Small Aptmt', '27.03.2024', '17', '04.03.24', '9', 270)
 ron.createOffer(
   'Blue Hills',
   'Spring Rental',
@@ -36,7 +37,17 @@ ron.createOffer(
   'SF',
   'First spring rental auction at the end of Jan'
 )
-// Year works with YY and YYYY inputs!
+ron.createOffer(
+  'The Green House',
+  'Spring Rental Big Aptmnt',
+  '27.03.24',
+  '16',
+  '04.03.2024',
+  '10',
+  470,
+  'Winter Auction'
+)
+// Year works with YY and YYYY inputs, but they might be evaluated as 1900 some years, not 2000 some years!
 // ron.createAuction('The Green House', 'Spring offer', '04.08.24')
 // ron.createAuction('Blue Hills', 'Spring offer', '04.08.2024')
 // ron.removeAuction('The Green House', 'Spring offer')
@@ -44,5 +55,5 @@ ron.createOffer(
 
 // ron.lookupListingsInAuction('Spring offer')
 ron.updateOfferForAuction('Christmas Rental', 'Late Fall Auction')
-ron.updateOfferRemoveAuction('Christmas Rental')
+// ron.updateOfferRemoveAuction('Christmas Rental')
 console.log(ron)

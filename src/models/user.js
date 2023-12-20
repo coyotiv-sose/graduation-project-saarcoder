@@ -22,6 +22,10 @@ class User {
       const initiator = this.last
       let [startDay, startMonth, startYear] = startString.split('.')
       let [endDay, endMonth, endYear] = endString.split('.')
+      if (startYear.length === 2 || endYear.length === 2) {
+        startYear = startYear.padStart(4, '20')
+        endYear = endYear.padStart(4, '20')
+      }
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
       const offer = Offer.create({ initiator, listing, offerName, start, end, price, currency, toAuction })
@@ -32,7 +36,7 @@ class User {
   updateOfferForAuction(offer, auction) {
     // offer names will be replaced by ids later, so no need for further checks at this point
     const selected = this.offers.filter(el => el.offerName === offer)[0]
-    selected.updateAuctionProp(auction)
+    selected.addAuctionProp(auction)
   }
 
   updateOfferRemoveAuction(offer) {
@@ -40,15 +44,6 @@ class User {
     selected.removeAuctionProp()
   }
   /*
-    removeAuction(listing, auction) {
-      const listingNames = this.auctions.map(el => el.listing)
-      const auctionNames = this.auctions.map(el => el.auctionName)
-      console.log(listingNames, auctionNames)
-      if (listingNames.includes(listing) && auctionNames.includes(auction)) {
-        this.auctions.splice(auctionNames.indexOf(auction), 1)
-      }
-    }
-
     lookupListingsInAuction(auction) {
       console.log(this.auctions.filter(el => el.auctionName === auction))
       return this.auctions.filter(el => el.auctionName === auction)

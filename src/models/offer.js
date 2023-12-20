@@ -18,7 +18,7 @@ class Offer {
     return offer
   }
 
-  updateAuctionProp(auction) {
+  addAuctionProp(auction) {
     const offer = this
     offer.auction = auction
     return offer
