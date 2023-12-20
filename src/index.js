@@ -46,8 +46,12 @@ ron.createOffer(
   'Winter Auction'
 )
 
-ron.updateOfferAddAuction('Christmas Rental The Small One', 'Late Fall Auction')
-ron.updateOfferAddAuction('Spring Rental Big Aptmnt', 'Late Fall Auction')
-ron.updateOfferRemoveAuction('Christmas Rental The Small One')
+ron.updateOfferAddAuction('Christmas Rental The Small One', 'Late Fall Auction', '20.09.2023')
+ron.updateOfferAddAuction('Spring Rental Big Aptmnt', 'Late Fall Auction', '20.09.2023')
+// ron.updateOfferRemoveAuction('Christmas Rental The Small One')
 console.log(ron)
-console.log('list: ', ron.lookupListingsInAuction('Late Fall Auction'))
+
+console.log(
+  'you have planned these offers to be included in the auction: ',
+  ron.lookupListingsInAuction('Late Fall Auction')
+)

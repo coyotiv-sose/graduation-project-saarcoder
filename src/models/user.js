@@ -31,9 +31,16 @@ class User {
     } else throw new Error('Please add your listing first, then enter the offer period')
   }
 
-  updateOfferAddAuction(offer, auction) {
+  updateOfferAddAuction(offer, auction, dateString) {
+    if (typeof startString === 'undefined')
+      throw new Error('Please enter a date for when you want to start the auction')
+    let [startDay, startMonth, startYear] = dateString.split('.')
+    if (startYear.length === 2) {
+      startYear = startYear.padStart(4, '20')
+    }
+    const start = new Date(startYear, (startMonth -= 1), startDay)
     const selected = this.offers.filter(el => el.offerName === offer)[0]
-    selected.addAuctionProp(auction)
+    selected.addAuctionProp(auction, start)
   }
 
   updateOfferRemoveAuction(offer) {
