@@ -1,4 +1,3 @@
-// Do I really need this class, or can I get away with adding a putUpForAuction property for the offer class?
 class Auction {
   constructor(initiator, listing, offer, auctionName, publishFrom) {
     this.auctionCreator = initiator

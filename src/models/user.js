@@ -1,6 +1,6 @@
 const Listing = require('./listing')
 const Offer = require('./offer')
-const Auction = require('./auction')
+// const Auction = require('./auction')
 
 class User {
   constructor(firstName, lastName) {
@@ -16,7 +16,7 @@ class User {
     this.listings.push(listing)
   }
 
-  createOffer(listing, startString, checkIn, endString, checkOut, price, currency) {
+  createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency, toAuction) {
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
       const initiator = this.last
@@ -24,36 +24,29 @@ class User {
       let [endDay, endMonth, endYear] = endString.split('.')
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
-      const offer = Offer.create({ initiator, listing, start, end, price, currency })
+      const offer = Offer.create({ initiator, listing, offerName, start, end, price, currency, toAuction })
       this.offers.push(offer)
     } else console.log('Please add your listing first, then enter the offer period')
   }
 
-  // TODO: Auctions need to be created from offer objects and include all of their properties. Maybe the listing argument is not needed at all for the creation and for the auction model.
-  // The createAuction method might need to
-  createAuction(listing, offer, auctionName, timeString, initiator = this.last) {
-    const listingNames = this.listings.map(el => el.name)
-    let [day, month, year] = timeString.split('.')
-    const publishFrom = new Date(year, (month -= 1), day)
-    if (listingNames.includes(listing)) {
-      const auction = Auction.create({ initiator, listing, offer, auctionName, publishFrom })
-      this.auctions.push(auction)
+  updateOfferList(offer, auction) {
+    const selected = this.offers.filter(el => el.offerName === offer)[0]
+    selected.updateAuctionProp(auction)
+  }
+  /*
+    removeAuction(listing, auction) {
+      const listingNames = this.auctions.map(el => el.listing)
+      const auctionNames = this.auctions.map(el => el.auctionName)
+      console.log(listingNames, auctionNames)
+      if (listingNames.includes(listing) && auctionNames.includes(auction)) {
+        this.auctions.splice(auctionNames.indexOf(auction), 1)
+      }
     }
-  }
 
-  removeAuction(listing, auction) {
-    const listingNames = this.auctions.map(el => el.listing)
-    const auctionNames = this.auctions.map(el => el.auctionName)
-    console.log(listingNames, auctionNames)
-    if (listingNames.includes(listing) && auctionNames.includes(auction)) {
-      this.auctions.splice(auctionNames.indexOf(auction), 1)
-    }
-  }
-
-  lookupListingsInAuction(auction) {
-    console.log(this.auctions.filter(el => el.auctionName === auction))
-    return this.auctions.filter(el => el.auctionName === auction)
-  }
+    lookupListingsInAuction(auction) {
+      console.log(this.auctions.filter(el => el.auctionName === auction))
+      return this.auctions.filter(el => el.auctionName === auction)
+    } */
 
   addEmail(email, password) {
     this.email = email
