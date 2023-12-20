@@ -47,7 +47,7 @@ ron.createOffer(
   470,
   'Winter Auction'
 )
-// Year works with YY and YYYY inputs, but they might be evaluated as 1900 some years, not 2000 some years!
+// YY vs YYYY inputs: Integer value representing the year. Values from 0 to 99 map to the years 1900 to 1999. All other values are the actual year.
 // ron.createAuction('The Green House', 'Spring offer', '04.08.24')
 // ron.createAuction('Blue Hills', 'Spring offer', '04.08.2024')
 // ron.removeAuction('The Green House', 'Spring offer')
