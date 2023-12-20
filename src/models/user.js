@@ -16,8 +16,7 @@ class User {
     this.listings.push(listing)
   }
 
-  createOffer(listing, startString, checkIn, endString, checkOut, price, currency = '$') {
-    // check if the user (still) has that listing in his listings list
+  createOffer(listing, startString, checkIn, endString, checkOut, price, currency) {
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
       const initiator = this.last
@@ -30,7 +29,6 @@ class User {
     } else console.log('Please add your listing first, then enter the offer period')
   }
 
-  // TODO: let the listing in an auction be an array
   createAuction(listing, auctionName, timeString, initiator = this.last) {
     const listingNames = this.listings.map(el => el.name)
     let [day, month, year] = timeString.split('.')
@@ -41,7 +39,6 @@ class User {
     }
   }
 
-  // TODO: let the listing in an auction be an array
   removeAuction(listing, auction) {
     const listingNames = this.auctions.map(el => el.listing)
     const auctionNames = this.auctions.map(el => el.auctionName)
@@ -49,6 +46,12 @@ class User {
     if (listingNames.includes(listing) && auctionNames.includes(auction)) {
       this.auctions.splice(auctionNames.indexOf(auction), 1)
     }
+  }
+
+  // Auctions should be centered on ONE listing, not on a package of listings of an owner. Therefore any auction object only needs to refer to that one listing. Nevertheless, an owner still can use the same name for an auction for various listings he wants to auction off. But this information on whether the auction name has already been used by him needs not to be available as a property of an auction object. Rather, he should just be able to list the listings he has in the user object's auctions list that have the same auctionName.
+  lookupListingsForAuction(auction) {
+    console.log(this.auctions.filter(el => el.auctionName === auction))
+    return this.auctions.filter(el => el.auctionName === auction)
   }
 
   addEmail(email, password) {
