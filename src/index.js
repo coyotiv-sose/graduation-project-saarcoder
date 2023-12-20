@@ -55,4 +55,7 @@ console.log(
   ron.readListingsInAuction('Late Fall Auction')
 )
 ron.deleteListing('Blue Hills')
+ron.updateListingName('The Green House', 'Velvet Blue')
+ron.updateListingOwner('Velvet Blue', 'Middleton')
 console.log(ron)
+console.log(ron.getListingNames())

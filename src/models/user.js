@@ -14,11 +14,29 @@ class User {
     this.listings.push(listing)
   }
 
+  updateListingName(name, newName) {
+    const listingIndex = this.listings.findIndex(el => el.name === name)
+    this.listings[listingIndex].name = newName
+    // TODO: update related offers
+  }
+
+  updateListingOwner(name, newOwner) {
+    const listingIndex = this.listings.findIndex(el => el.name === name)
+    this.listings[listingIndex].owner = newOwner
+    // TODO: update related offers
+  }
+
   deleteListing(listing) {
     this.listings.splice(
       this.listings.findIndex(el => el.name === listing),
       1
     )
+  }
+
+  getListingNames() {
+    const listingNames = []
+    this.listings.forEach(el => listingNames.push(el.name))
+    return listingNames
   }
 
   createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency, toAuction) {
