@@ -29,12 +29,14 @@ class User {
     } else console.log('Please add your listing first, then enter the offer period')
   }
 
-  createAuction(listing, auctionName, timeString, initiator = this.last) {
+  // TODO: Auctions need to be created from offer objects and include all of their properties. Maybe the listing argument is not needed at all for the creation and for the auction model.
+  // The createAuction method might need to
+  createAuction(listing, offer, auctionName, timeString, initiator = this.last) {
     const listingNames = this.listings.map(el => el.name)
     let [day, month, year] = timeString.split('.')
     const publishFrom = new Date(year, (month -= 1), day)
     if (listingNames.includes(listing)) {
-      const auction = Auction.create({ initiator, listing, auctionName, publishFrom })
+      const auction = Auction.create({ initiator, listing, offer, auctionName, publishFrom })
       this.auctions.push(auction)
     }
   }
@@ -48,8 +50,7 @@ class User {
     }
   }
 
-  // Auctions should be centered on ONE listing, not on a package of listings of an owner. Therefore any auction object only needs to refer to that one listing. Nevertheless, an owner still can use the same name for an auction for various listings he wants to auction off. But this information on whether the auction name has already been used by him needs not to be available as a property of an auction object. Rather, he should just be able to list the listings he has in the user object's auctions list that have the same auctionName.
-  lookupListingsForAuction(auction) {
+  lookupListingsInAuction(auction) {
     console.log(this.auctions.filter(el => el.auctionName === auction))
     return this.auctions.filter(el => el.auctionName === auction)
   }
