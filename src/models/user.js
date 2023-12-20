@@ -32,8 +32,7 @@ class User {
   }
 
   updateOfferAddAuction(offer, auction, dateString) {
-    if (typeof startString === 'undefined')
-      throw new Error('Please enter a date for when you want to start the auction')
+    if (typeof dateString === 'undefined') throw new Error('Please enter a date for when you want to start the auction')
     let [startDay, startMonth, startYear] = dateString.split('.')
     if (startYear.length === 2) {
       startYear = startYear.padStart(4, '20')
@@ -50,7 +49,7 @@ class User {
 
   lookupListingsInAuction(auction) {
     const searchList = this.offers.filter(el => el.auction === auction)
-    return searchList
+    return searchList.map(el => el.offerName)
   }
 
   addEmail(email, password) {

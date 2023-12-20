@@ -52,6 +52,6 @@ ron.updateOfferAddAuction('Spring Rental Big Aptmnt', 'Late Fall Auction', '20.0
 console.log(ron)
 
 console.log(
-  'you have planned these offers to be included in the auction: ',
+  'you have planned these offers to be included in this auction: ',
   ron.lookupListingsInAuction('Late Fall Auction')
 )
