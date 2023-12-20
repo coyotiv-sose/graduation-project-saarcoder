@@ -14,6 +14,13 @@ class User {
     this.listings.push(listing)
   }
 
+  deleteListing(listing) {
+    this.listings.splice(
+      this.listings.findIndex(el => el.name === listing),
+      1
+    )
+  }
+
   createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency, toAuction) {
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
@@ -31,6 +38,11 @@ class User {
     } else throw new Error('Please add your listing first, then enter the offer period')
   }
 
+  deleteOffer(offer) {
+    const elIndex = this.offers.findIndex(el => el.offerName === offer)
+    this.offers.splice(elIndex, 1)
+  }
+
   updateOfferAddAuction(offer, auction, dateString) {
     if (typeof dateString === 'undefined') throw new Error('Please enter a date for when you want to start the auction')
     let [startDay, startMonth, startYear] = dateString.split('.')
@@ -39,16 +51,17 @@ class User {
     }
     const start = new Date(startYear, (startMonth -= 1), startDay)
     const selected = this.offers.filter(el => el.offerName === offer)[0]
-    selected.addAuctionProp(auction, start)
+    selected.addAuctionProps(auction, start)
   }
 
   updateOfferRemoveAuction(offer) {
     const selected = this.offers.filter(el => el.offerName === offer)[0]
-    selected.removeAuctionProp()
+    selected.removeAuctionProps()
   }
 
-  lookupListingsInAuction(auction) {
+  readListingsInAuction(auction) {
     const searchList = this.offers.filter(el => el.auction === auction)
+    // restrict display to offer names:
     return searchList.map(el => el.offerName)
   }
 

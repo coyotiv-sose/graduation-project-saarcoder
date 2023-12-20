@@ -20,14 +20,14 @@ class Offer {
     return offer
   }
 
-  addAuctionProp(auction, start) {
+  addAuctionProps(auction, start) {
     const offer = this
     offer.auction = auction
     offer.auctionStart = start
     return offer
   }
 
-  removeAuctionProp() {
+  removeAuctionProps() {
     const offer = this
     offer.auction = undefined
     offer.auctionStart = undefined
