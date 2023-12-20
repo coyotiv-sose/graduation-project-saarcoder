@@ -43,5 +43,6 @@ ron.createOffer(
 // ron.createAuction('The Green House', 'Summer special', '20.06.2024')
 
 // ron.lookupListingsInAuction('Spring offer')
-ron.updateOfferList('Christmas Rental', 'Late Fall Auction')
+ron.updateOfferForAuction('Christmas Rental', 'Late Fall Auction')
+ron.updateOfferRemoveAuction('Christmas Rental')
 console.log(ron)

@@ -23,5 +23,11 @@ class Offer {
     offer.auction = auction
     return offer
   }
+
+  removeAuctionProp() {
+    const offer = this
+    offer.auction = null
+    return offer
+  }
 }
 module.exports = Offer

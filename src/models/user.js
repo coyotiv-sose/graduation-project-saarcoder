@@ -29,9 +29,15 @@ class User {
     } else console.log('Please add your listing first, then enter the offer period')
   }
 
-  updateOfferList(offer, auction) {
+  updateOfferForAuction(offer, auction) {
+    // offer names will be replaced by ids later, so no need for further checks at this point
     const selected = this.offers.filter(el => el.offerName === offer)[0]
     selected.updateAuctionProp(auction)
+  }
+
+  updateOfferRemoveAuction(offer) {
+    const selected = this.offers.filter(el => el.offerName === offer)[0]
+    selected.removeAuctionProp()
   }
   /*
     removeAuction(listing, auction) {
