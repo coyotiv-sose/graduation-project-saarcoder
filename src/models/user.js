@@ -78,7 +78,6 @@ class User {
     } else {
       end = new Date(startYear, startMonth, startDay, endTime)
     }
-    console.log(end)
     const selected = this.offers.filter(el => el.offerName === offer)[0]
     selected.addAuctionProps(auction, start, end)
   }
