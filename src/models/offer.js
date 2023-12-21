@@ -1,7 +1,5 @@
 class Offer {
-  auctionStart = null
-
-  constructor(initiator, listing, offerName, start, end, price, currency = '€', toAuction = null) {
+  constructor(initiator, listing, offerName, start, end, price, currency = '€') {
     this.initiator = initiator
     this.listing = listing
     this.start = start
@@ -9,13 +7,12 @@ class Offer {
     this.minPrice = price
     this.currency = currency
     this.offerName = offerName
-    this.auction = toAuction
   }
 
   static list = []
 
-  static create({ initiator, listing, offerName, start, end, price, currency, toAuction }) {
-    const offer = new Offer(initiator, listing, offerName, start, end, price, currency, toAuction)
+  static create({ initiator, listing, offerName, start, end, price, currency }) {
+    const offer = new Offer(initiator, listing, offerName, start, end, Number(price), currency)
     Offer.list.push(offer)
     return offer
   }

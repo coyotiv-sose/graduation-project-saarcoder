@@ -31,7 +31,7 @@ ron.createOffer(
   '19',
   '08.04.2024',
   '10',
-  575,
+  '575',
   'SF',
   'First spring rental auction at the end of Jan'
 )
@@ -42,19 +42,19 @@ ron.createOffer(
   '16',
   '04.03.2024',
   '10',
-  470,
+  '470',
   'Winter Auction'
 )
 
 ron.updateOfferAddAuction('Christmas Rental The Small One', 'Late Fall Auction', '20.09.2023')
-ron.updateOfferAddAuction('Spring Rental Big Aptmnt', 'Late Fall Auction', '20.09.2023')
+ron.updateOfferAddAuction('Spring Rental Big Aptmnt', 'Late Fall Auction', '20.09.2023', '16')
 ron.updateOfferRemoveAuction('Christmas Rental The Small One')
 ron.deleteOffer('Spring Rental')
 console.log(
   'you have planned these offers to be included in this auction: ',
   ron.readListingsInAuction('Late Fall Auction')
 )
-ron.deleteListing('Blue Hills')
+// ron.deleteListing('Blue Hills')
 ron.updateListingName('The Green House', 'Velvet Blue')
 ron.updateListingOwner('Velvet Blue', 'Middleton')
 console.log(ron)

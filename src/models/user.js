@@ -17,7 +17,7 @@ class User {
   updateListingName(name, newName) {
     const listingIndex = this.listings.findIndex(el => el.name === name)
     this.listings[listingIndex].name = newName
-    // TODO: update related offers
+    const offerIndices = this.offers.f
   }
 
   updateListingOwner(name, newOwner) {
@@ -35,11 +35,12 @@ class User {
 
   getListingNames() {
     const listingNames = []
+    // just show the names, not objects:
     this.listings.forEach(el => listingNames.push(el.name))
     return listingNames
   }
 
-  createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency, toAuction) {
+  createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency) {
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
       const initiator = this.last
@@ -51,7 +52,7 @@ class User {
       }
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
-      const offer = Offer.create({ initiator, listing, offerName, start, end, price, currency, toAuction })
+      const offer = Offer.create({ initiator, listing, offerName, start, end, price, currency })
       this.offers.push(offer)
     } else throw new Error('Please add your listing first, then enter the offer period')
   }
@@ -61,15 +62,15 @@ class User {
     this.offers.splice(elIndex, 1)
   }
 
-  updateOfferAddAuction(offer, auction, dateString) {
+  updateOfferAddAuction(offer, auction, dateString, timeString) {
     if (typeof dateString === 'undefined') throw new Error('Please enter a date for when you want to start the auction')
     let [startDay, startMonth, startYear] = dateString.split('.')
     if (startYear.length === 2) {
       startYear = startYear.padStart(4, '20')
     }
-    const start = new Date(startYear, (startMonth -= 1), startDay)
+    const date = new Date(startYear, (startMonth -= 1), startDay, timeString)
     const selected = this.offers.filter(el => el.offerName === offer)[0]
-    selected.addAuctionProps(auction, start)
+    selected.addAuctionProps(auction, date, timeString)
   }
 
   updateOfferRemoveAuction(offer) {
