@@ -4,26 +4,62 @@ const Offer = require('./offer')
 class User {
   constructor(firstName, lastName) {
     this.first = firstName || ''
-    this.last = lastName
+    this.lastName = lastName
     this.listings = []
     this.offers = []
   }
 
-  createListing(name, location) {
-    const listing = new Listing(this.last, name, location)
+  createListing(name, country, region, place, numOfRooms, numOfBedsInTotal) {
+    const listing = new Listing(this.lastName, name, country, region, place, numOfRooms, numOfBedsInTotal)
     this.listings.push(listing)
   }
 
   updateListingName(name, newName) {
     const listingIndex = this.listings.findIndex(el => el.name === name)
     this.listings[listingIndex].name = newName
-    const offerIndices = this.offers.f
+    // const offerIndices = this.offers.f
   }
 
   updateListingOwner(name, newOwner) {
     const listingIndex = this.listings.findIndex(el => el.name === name)
     this.listings[listingIndex].owner = newOwner
     // TODO: update related offers
+  }
+
+  updateRemainingListingProps(
+    listingName,
+    numOfDoubleBeds,
+    cribOrCotAvailable,
+    kitchen,
+    kettle,
+    fridge,
+    freezer,
+    stove,
+    oven,
+    highChairAvailable,
+    washingMachine,
+    linen,
+    underfloorHeating,
+    laminateFlooring,
+    warmWaterAvailable
+  ) {
+    const listingIndex = this.listings.findIndex(el => el.name === listingName)
+    this.listings[listingIndex].addRemainingProps({
+      numOfDoubleBeds,
+      cribOrCotAvailable,
+      kitchen,
+      kettle,
+      fridge,
+      freezer,
+      stove,
+      oven,
+      highChairAvailable,
+      washingMachine,
+      linen,
+      underfloorHeating,
+      laminateFlooring,
+      warmWaterAvailable,
+    })
   }
 
   deleteListing(listing) {
@@ -43,7 +79,7 @@ class User {
   createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency) {
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
-      const initiator = this.last
+      const initiator = this.lastName
       let [startDay, startMonth, startYear] = startString.split('.')
       let [endDay, endMonth, endYear] = endString.split('.')
       if (startYear.length === 2 || endYear.length === 2) {
@@ -85,6 +121,11 @@ class User {
   updateOfferRemoveAuction(offer) {
     const selected = this.offers.filter(el => el.offerName === offer)[0]
     selected.removeAuctionProps()
+  }
+
+  updateOfferChangePrice(offerName, price) {
+    const selected = this.offers.filter(el => el.offerName === offerName)[0]
+    selected.minPrice = price
   }
 
   readListingsInAuction(auction) {
