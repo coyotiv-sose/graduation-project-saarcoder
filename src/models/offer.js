@@ -1,4 +1,10 @@
 class Offer {
+  auction
+
+  auctionStart
+
+  auctionEnd
+
   constructor(initiator, listing, offerName, start, end, price, currency = '€') {
     this.initiator = initiator
     this.listing = listing
@@ -17,10 +23,11 @@ class Offer {
     return offer
   }
 
-  addAuctionProps(auction, start) {
+  addAuctionProps(auction, start, end) {
     const offer = this
     offer.auction = auction
     offer.auctionStart = start
+    offer.auctionEnd = end
     return offer
   }
 
@@ -28,6 +35,7 @@ class Offer {
     const offer = this
     offer.auction = undefined
     offer.auctionStart = undefined
+    offer.auctionEnd = undefined
     return offer
   }
 }

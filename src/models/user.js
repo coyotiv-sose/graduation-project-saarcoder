@@ -62,15 +62,25 @@ class User {
     this.offers.splice(elIndex, 1)
   }
 
-  updateOfferAddAuction(offer, auction, dateString, timeString) {
-    if (typeof dateString === 'undefined') throw new Error('Please enter a date for when you want to start the auction')
-    let [startDay, startMonth, startYear] = dateString.split('.')
+  updateOfferAddAuction(offer, auction, startDate, startTime, endTime) {
+    if (typeof startDate === 'undefined') throw new Error('Please enter a date for when you want to start the auction')
+    let [startDay, startMonth, startYear] = startDate.split('.')
     if (startYear.length === 2) {
       startYear = startYear.padStart(4, '20')
     }
-    const date = new Date(startYear, (startMonth -= 1), startDay, timeString)
+    const start = new Date(startYear, (startMonth -= 1), startDay, startTime)
+    // handle timeStrings that give minutes after colon
+    let end
+    if (endTime.length === 5 && endTime.includes(':')) {
+      const hour = endTime.split(':')[0]
+      const min = endTime.split(':')[1]
+      end = new Date(startYear, startMonth, startDay, hour, min)
+    } else {
+      end = new Date(startYear, startMonth, startDay, endTime)
+    }
+    console.log(end)
     const selected = this.offers.filter(el => el.offerName === offer)[0]
-    selected.addAuctionProps(auction, date, timeString)
+    selected.addAuctionProps(auction, start, end)
   }
 
   updateOfferRemoveAuction(offer) {
