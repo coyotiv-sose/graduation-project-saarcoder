@@ -39,13 +39,18 @@ router.post('/newOffer/:userId', (req, res) => {
   res.sendStatus(200)
 })
 router.get('/newOffer/:userId', (req, res) => res.send(user.offers))
-router.get('/:userId/offerList', (req, res) => {
+router.get('/:userId/listings', (req, res) => {
   // new user does not need to be created again, as he was created by former post request from client
-  if (user.firstName === req.params.userId) console.log(user)
-  res.send(user.listings)
+  if (user.firstName === req.params.userId) res.send(user.listings)
 })
-router.put('/:userId/updateOffer', (req, res) => {
+router.put('/:userId/updateAddAuctionToOffer', (req, res) => {
   const { offer, auction, startDate, startTime, endTime } = req.body
-  if (user.firstName === req.params.userId) user.updateOfferAddAuction(offer, auction, startDate, startTime, endTime)
+  if (user.firstName === req.params.userId) {
+    user.updateOfferAddAuction(offer, auction, startDate, startTime, endTime)
+  }
+  res.sendStatus(200)
+})
+router.get('/:userId/offers', (req, res) => {
+  if (user.firstName === req.params.userId) res.send(user.offers)
 })
 module.exports = router

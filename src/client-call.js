@@ -3,7 +3,7 @@ const axios = require('axios').default
 axios.defaults.baseURL = 'http://localhost:3000'
 
 async function main() {
-  const merle = await axios.post('/users', { firstName: 'Merle', lastName: 'Johannsen' })
+  await axios.post('/users', { firstName: 'Merle', lastName: 'Johannsen' })
   axios.get('/users').then(response => {
     console.log(response)
   })
@@ -74,13 +74,16 @@ async function main() {
   await axios
     .get('/users/newOffer/merle')
     .then(res => console.log('new offer: ', res.data[3].offerName, '- currency is set to:', res.data[3].currency))
-  await axios.get('/users/Merle/offerList').then(res => console.log(res.data.map(listing => listing.place)))
-  await axios.put('/users/merle/updateOffer', {
+  await axios.get('/users/Merle/listings').then(res => console.log(res.data.map(listing => listing.place)))
+  await axios.put('/users/Merle/updateAddAuctionToOffer', {
     offer: 'Christmas Rental The Small One',
     auction: 'Late Fall Auction',
     startDate: '20.09.2023',
     startTime: '15',
     endTime: '15:30',
   })
+  await axios
+    .get('/users/Merle/offers')
+    .then(res => console.log('new auction:', res.data.find(el => el.auction === 'Late Fall Auction').auction))
 }
 main()
