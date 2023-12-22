@@ -74,7 +74,13 @@ async function main() {
   await axios
     .get('/users/newOffer/merle')
     .then(res => console.log('new offer: ', res.data[3].offerName, '- currency is set to:', res.data[3].currency))
-  // await.axios.put('/users/merle/offerList')
   await axios.get('/users/Merle/offerList').then(res => console.log(res.data.map(listing => listing.place)))
+  await axios.put('/users/merle/updateOffer', {
+    offer: 'Christmas Rental The Small One',
+    auction: 'Late Fall Auction',
+    startDate: '20.09.2023',
+    startTime: '15',
+    endTime: '15:30',
+  })
 }
 main()
