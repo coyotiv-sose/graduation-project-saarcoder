@@ -5,7 +5,7 @@ axios.defaults.baseURL = 'http://localhost:3000'
 async function main() {
   await axios.post('/users', { firstName: 'Merle', lastName: 'Johannsen' })
 
-  axios.get('/users').then(response => {
+  await axios.get('/users').then(response => {
     console.log(response)
   })
 
@@ -48,6 +48,7 @@ async function main() {
   })
 
   await axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[0].offerName))
+
   await axios.post('/users/newOffer/merle', {
     listing: 'The Green House',
     offerName: 'Spring Rental Small Aptmt',
@@ -122,7 +123,11 @@ async function main() {
 
   await axios.delete('/users/Merle/deleteOffer/Christmas Rental The Small One')
 
-  await axios.get('/users/Merle/offers').then(res => console.log("Merle's offers:", res.data))
+  await axios.get('/users/Merle/offers').then(res => console.log("Merle's updated offers:", res.data))
+
+  await axios
+    .get('/users/Merle/search/Late Fall Auction')
+    .then(res => console.log('you have planned these offers to be included in this auction:', res.data))
 }
 
 main()

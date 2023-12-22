@@ -82,6 +82,7 @@ class User {
       const initiator = this.lastName
       let [startDay, startMonth, startYear] = startString.split('.')
       let [endDay, endMonth, endYear] = endString.split('.')
+      // adding the century if forgotten by the user
       startYear = startYear.padStart(4, '20')
       endYear = endYear.padStart(4, '20')
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)

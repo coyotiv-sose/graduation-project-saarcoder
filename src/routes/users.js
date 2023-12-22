@@ -5,8 +5,11 @@ const router = express.Router()
 const User = require('../models/user')
 
 let user
+
 const listingList = ['Blue Hills']
+
 const offerList = ['Special Summer Sale']
+
 router.get('/', (req, res) => {
   res.send(user)
 })
@@ -37,6 +40,7 @@ router.post('/dynamic/:userId', (req, res) => {
 })
 
 router.get('/dynamic/:userId', (req, res) => res.send(user.listings))
+
 router.post('/newOffer/:userId', (req, res) => {
   const { listing, offerName, startString, checkIn, endString, checkOut, price, currency } = req.body
   user.createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency)
@@ -68,6 +72,11 @@ router.delete('/:userId/deleteOffer/:resource', (req, res) => {
     user.deleteOffer(offer)
     res.sendStatus(200)
   }
+})
+
+router.get('/:userId/search/:offerForAuction', (req, res) => {
+  const { userId, offerForAuction } = req.params
+  if (user.firstName === userId) res.send(user.readListingsInAuction(offerForAuction))
 })
 
 module.exports = router
