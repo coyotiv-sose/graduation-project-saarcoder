@@ -10,16 +10,15 @@ async function main() {
   await axios.get('/users/staticOffers').then(res => console.log('static offer list: ', res.data))
   await axios.get('/users/staticListings').then(res => console.log('static listing: ', res.data[0].toUpperCase()))
   await axios.get('/users/staticListing')
-  const greenHouse = await axios
-    .post('/users/dynamic/merle', {
-      name: 'The Green House',
-      country: 'USA',
-      region: 'California',
-      place: 'Olive Beach',
-      numOfRooms: 2,
-      numOfBedsInTotal: 2,
-    })
-    .then(res => console.log('received: ', res.data))
+  await axios.post('/users/dynamic/merle', {
+    name: 'The Green House',
+    country: 'USA',
+    region: 'California',
+    place: 'Olive Beach',
+    numOfRooms: 2,
+    numOfBedsInTotal: 2,
+  })
+  axios.get('/users/dynamic/merle')
   /*     .catch(err => {
       console.log(err)
     }) */
