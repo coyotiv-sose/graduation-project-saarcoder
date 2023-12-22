@@ -33,5 +33,10 @@ router.post('/dynamic/:userId', (req, res) => {
   res.sendStatus(200)
 })
 router.get('/dynamic/:userId', (req, res) => res.send(user.listings))
-
+router.post('/newOffer/:userId', (req, res) => {
+  const { listing, offerName, startString, checkIn, endString, checkOut, price, currency } = req.body
+  const newOffer = user.createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency)
+  res.sendStatus(200)
+})
+router.get('/newOffer/:userId', (req, res) => res.send(user.offers))
 module.exports = router

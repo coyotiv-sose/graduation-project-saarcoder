@@ -28,5 +28,15 @@ async function main() {
   })
   axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
   axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[1].place))
+  axios.post('/users/newOffer/merle', {
+    listing: 'The Green House',
+    offerName: 'Christmas Rental The Small One',
+    startString: '20.12.2023',
+    checkIn: '17',
+    endString: '28.12.2023',
+    checkOut: '09',
+    price: 350,
+  })
+  axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[0].offerName))
 }
 main()
