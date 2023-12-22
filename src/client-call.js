@@ -26,9 +26,9 @@ async function main() {
     numOfRooms: 4,
     numOfBedsInTotal: 5,
   })
-  axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
-  axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[1].place))
-  axios.post('/users/newOffer/merle', {
+  await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
+  await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[1].place))
+  await axios.post('/users/newOffer/merle', {
     listing: 'The Green House',
     offerName: 'Christmas Rental The Small One',
     startString: '20.12.2023',
@@ -37,8 +37,8 @@ async function main() {
     checkOut: '09',
     price: 350,
   })
-  axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[0].offerName))
-  axios.post('/users/newOffer/merle', {
+  await axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[0].offerName))
+  await axios.post('/users/newOffer/merle', {
     listing: 'The Green House',
     offerName: 'Spring Rental Small Aptmt',
     startString: '27.03.2024',
@@ -47,8 +47,8 @@ async function main() {
     checkOut: '09',
     price: 270,
   })
-  axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[1].offerName))
-  axios.post('/users/newOffer/merle', {
+  await axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[1].offerName))
+  await axios.post('/users/newOffer/merle', {
     listing: 'Blue Hills',
     offerName: 'Spring Rental',
     startString: '01.04.2024',
@@ -58,10 +58,10 @@ async function main() {
     price: 575,
     currency: 'SF',
   })
-  axios
+  await axios
     .get('/users/newOffer/merle')
     .then(res => console.log('new offer: ', res.data[2].offerName, '- currency is set to:', res.data[2].currency))
-  axios.post('/users/newOffer/merle', {
+  await axios.post('/users/newOffer/merle', {
     listing: 'The Green House',
     offerName: 'Spring Rental Big Aptmnt',
     startString: '27.03.24',
@@ -71,8 +71,10 @@ async function main() {
     price: 470,
     currency: 'USD',
   })
-  axios
+  await axios
     .get('/users/newOffer/merle')
     .then(res => console.log('new offer: ', res.data[3].offerName, '- currency is set to:', res.data[3].currency))
+  // await.axios.put('/users/merle/offerList')
+  await axios.get('/users/Merle/offerList').then(res => console.log(res.data.map(listing => listing.place)))
 }
 main()

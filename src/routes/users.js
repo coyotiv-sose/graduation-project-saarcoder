@@ -39,4 +39,8 @@ router.post('/newOffer/:userId', (req, res) => {
   res.sendStatus(200)
 })
 router.get('/newOffer/:userId', (req, res) => res.send(user.offers))
+router.get('/:userId/offerList', (req, res) => {
+  if (user.firstName === req.params.userId) console.log(user)
+  res.send(user.listings)
+})
 module.exports = router
