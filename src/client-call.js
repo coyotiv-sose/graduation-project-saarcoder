@@ -4,12 +4,17 @@ axios.defaults.baseURL = 'http://localhost:3000'
 
 async function main() {
   await axios.post('/users', { firstName: 'Merle', lastName: 'Johannsen' })
+
   axios.get('/users').then(response => {
     console.log(response)
   })
+
   await axios.get('/users/staticOffers').then(res => console.log('static offer list: ', res.data))
+
   await axios.get('/users/staticListings').then(res => console.log('static listing: ', res.data[0].toUpperCase()))
+
   await axios.get('/users/staticListing')
+
   await axios.post('/users/dynamic/merle', {
     name: 'The Green House',
     country: 'USA',
@@ -18,6 +23,7 @@ async function main() {
     numOfRooms: 2,
     numOfBedsInTotal: 2,
   })
+
   await axios.post('/users/dynamic/merle', {
     name: 'Blue Hills',
     country: 'USA',
@@ -26,8 +32,11 @@ async function main() {
     numOfRooms: 4,
     numOfBedsInTotal: 5,
   })
+
   await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
+
   await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[1].place))
+
   await axios.post('/users/newOffer/merle', {
     listing: 'The Green House',
     offerName: 'Christmas Rental The Small One',
@@ -37,6 +46,7 @@ async function main() {
     checkOut: '09',
     price: 350,
   })
+
   await axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[0].offerName))
   await axios.post('/users/newOffer/merle', {
     listing: 'The Green House',
@@ -47,7 +57,9 @@ async function main() {
     checkOut: '09',
     price: 270,
   })
+
   await axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[1].offerName))
+
   await axios.post('/users/newOffer/merle', {
     listing: 'Blue Hills',
     offerName: 'Spring Rental',
@@ -58,9 +70,11 @@ async function main() {
     price: 575,
     currency: 'SF',
   })
+
   await axios
     .get('/users/newOffer/merle')
     .then(res => console.log('new offer: ', res.data[2].offerName, '- currency is set to:', res.data[2].currency))
+
   await axios.post('/users/newOffer/merle', {
     listing: 'The Green House',
     offerName: 'Spring Rental Big Aptmnt',
@@ -71,10 +85,13 @@ async function main() {
     price: 470,
     currency: 'USD',
   })
+
   await axios
     .get('/users/newOffer/merle')
     .then(res => console.log('new offer: ', res.data[3].offerName, '- currency is set to:', res.data[3].currency))
+
   await axios.get('/users/Merle/listings').then(res => console.log(res.data.map(listing => listing.place)))
+
   await axios.put('/users/Merle/updateAddAuctionToOffer', {
     offer: 'Christmas Rental The Small One',
     auction: 'Late Fall Auction',
@@ -82,9 +99,11 @@ async function main() {
     startTime: '15',
     endTime: '15:30',
   })
+
   await axios
     .get('/users/Merle/offers')
     .then(res => console.log('new auction:', res.data.find(el => el.auction === 'Late Fall Auction').auction))
+
   await axios.put('/users/Merle/updateAddAuctionToOffer', {
     offer: 'Spring Rental Big Aptmnt',
     auction: 'Late Fall Auction',
@@ -92,6 +111,7 @@ async function main() {
     startTime: '16',
     endTime: '16:15',
   })
+
   // filter offers that are set up for an auction:
   await axios.get('/users/Merle/offers').then(res =>
     console.log(
@@ -99,7 +119,10 @@ async function main() {
       res.data.filter(el => el.auction)
     )
   )
-  await axios.delete('/users/Merle/delete/Christmas Rental The Small One')
+
+  await axios.delete('/users/Merle/deleteOffer/Christmas Rental The Small One')
+
   await axios.get('/users/Merle/offers').then(res => console.log("Merle's offers:", res.data))
 }
+
 main()
