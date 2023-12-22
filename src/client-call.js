@@ -38,5 +38,41 @@ async function main() {
     price: 350,
   })
   axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[0].offerName))
+  axios.post('/users/newOffer/merle', {
+    listing: 'The Green House',
+    offerName: 'Spring Rental Small Aptmt',
+    startString: '27.03.2024',
+    checkIn: '17',
+    endString: '04.03.24',
+    checkOut: '09',
+    price: 270,
+  })
+  axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[1].offerName))
+  axios.post('/users/newOffer/merle', {
+    listing: 'Blue Hills',
+    offerName: 'Spring Rental',
+    startString: '01.04.2024',
+    checkIn: '19',
+    endString: '08.04.2024',
+    checkOut: '10',
+    price: 575,
+    currency: 'SF',
+  })
+  axios
+    .get('/users/newOffer/merle')
+    .then(res => console.log('new offer: ', res.data[2].offerName, '- currency is set to:', res.data[2].currency))
+  axios.post('/users/newOffer/merle', {
+    listing: 'The Green House',
+    offerName: 'Spring Rental Big Aptmnt',
+    startString: '27.03.24',
+    checkIn: '16',
+    endString: '04.03.2024',
+    checkOut: '10',
+    price: 470,
+    currency: 'USD',
+  })
+  axios
+    .get('/users/newOffer/merle')
+    .then(res => console.log('new offer: ', res.data[3].offerName, '- currency is set to:', res.data[3].currency))
 }
 main()
