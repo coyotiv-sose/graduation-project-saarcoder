@@ -53,4 +53,12 @@ router.put('/:userId/updateAddAuctionToOffer', (req, res) => {
 router.get('/:userId/offers', (req, res) => {
   if (user.firstName === req.params.userId) res.send(user.offers)
 })
+router.delete('/:userId/delete/:resource', (req, res) => {
+  const offer = req.params.resource
+  console.log(offer)
+  if (user.firstName === req.params.userId) {
+    user.deleteOffer(offer)
+    res.sendStatus(200)
+  }
+})
 module.exports = router

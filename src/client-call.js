@@ -99,5 +99,7 @@ async function main() {
       res.data.filter(el => el.auction)
     )
   )
+  await axios.delete('/users/Merle/delete/Christmas Rental The Small One')
+  await axios.get('/users/Merle/offers').then(res => console.log("Merle's offers:", res.data))
 }
 main()
