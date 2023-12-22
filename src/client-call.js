@@ -18,7 +18,7 @@ async function main() {
     numOfRooms: 2,
     numOfBedsInTotal: 2,
   })
-  axios.get('/users/dynamic/merle')
+  axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
   /*     .catch(err => {
       console.log(err)
     }) */
