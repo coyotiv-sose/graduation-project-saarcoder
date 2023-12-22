@@ -18,9 +18,15 @@ async function main() {
     numOfRooms: 2,
     numOfBedsInTotal: 2,
   })
+  await axios.post('/users/dynamic/merle', {
+    name: 'Blue Hills',
+    country: 'USA',
+    region: 'Appalachians',
+    place: 'Dusty Mills',
+    numOfRooms: 4,
+    numOfBedsInTotal: 5,
+  })
   axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
-  /*     .catch(err => {
-      console.log(err)
-    }) */
+  axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[1].place))
 }
 main()

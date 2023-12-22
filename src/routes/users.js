@@ -29,9 +29,7 @@ router.get('/staticListing', (req, res) => {
 // create a new listing in users list
 router.post('/dynamic/:userId', (req, res) => {
   const { name, country, region, place, numOfRooms, numOfBedsInTotal } = req.body
-  console.log('user:', user.firstName, '- region:', region)
   userListing = user.createListing(name, country, region, place, numOfRooms, numOfBedsInTotal)
-  console.log(user.listings)
   res.sendStatus(200)
 })
 router.get('/dynamic/:userId', (req, res) => res.send(user.listings))
