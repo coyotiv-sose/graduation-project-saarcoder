@@ -85,5 +85,19 @@ async function main() {
   await axios
     .get('/users/Merle/offers')
     .then(res => console.log('new auction:', res.data.find(el => el.auction === 'Late Fall Auction').auction))
+  await axios.put('/users/Merle/updateAddAuctionToOffer', {
+    offer: 'Spring Rental Big Aptmnt',
+    auction: 'Late Fall Auction',
+    startDate: '20.09.2023',
+    startTime: '16',
+    endTime: '16:15',
+  })
+  // filter offers that are set up for an auction:
+  await axios.get('/users/Merle/offers').then(res =>
+    console.log(
+      'new auction:',
+      res.data.filter(el => el.auction)
+    )
+  )
 }
 main()
