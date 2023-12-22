@@ -3,7 +3,7 @@ const Offer = require('./offer')
 
 class User {
   constructor(firstName, lastName) {
-    this.first = firstName || ''
+    this.firstName = firstName || ''
     this.lastName = lastName
     this.listings = []
     this.offers = []
@@ -17,7 +17,7 @@ class User {
   updateListingName(name, newName) {
     const listingIndex = this.listings.findIndex(el => el.name === name)
     this.listings[listingIndex].name = newName
-    // const offerIndices = this.offers.f
+    // TODO: update related offers
   }
 
   updateListingOwner(name, newOwner) {
@@ -82,10 +82,8 @@ class User {
       const initiator = this.lastName
       let [startDay, startMonth, startYear] = startString.split('.')
       let [endDay, endMonth, endYear] = endString.split('.')
-      if (startYear.length === 2 || endYear.length === 2) {
-        startYear = startYear.padStart(4, '20')
-        endYear = endYear.padStart(4, '20')
-      }
+      startYear = startYear.padStart(4, '20')
+      endYear = endYear.padStart(4, '20')
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
       const offer = Offer.create({ initiator, listing, offerName, start, end, price, currency })
@@ -101,9 +99,7 @@ class User {
   updateOfferAddAuction(offer, auction, startDate, startTime, endTime) {
     if (typeof startDate === 'undefined') throw new Error('Please enter a date for when you want to start the auction')
     let [startDay, startMonth, startYear] = startDate.split('.')
-    if (startYear.length === 2) {
-      startYear = startYear.padStart(4, '20')
-    }
+    startYear = startYear.padStart(4, '20')
     const start = new Date(startYear, (startMonth -= 1), startDay, startTime)
     // handle timeStrings that give minutes after colon
     let end
