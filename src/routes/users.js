@@ -12,19 +12,11 @@ const offerList = ['Special Summer Sale']
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
-  const users = await User.find()
-  res.send(users)
+  res.send(await User.find())
 })
 
 router.post('/', async (req, res) => {
-  try {
-    const { firstName, lastName } = req.body
-    user = new User({ firstName, lastName })
-    await user.save() // mongoose method save() to save user to database
-    res.sendStatus(200)
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
+  res.send(await User.create({ firstName: req.body.firstName, lastName: req.body.lastName }))
 })
 
 router.get('/staticOffers', (req, res) => {
