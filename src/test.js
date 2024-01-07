@@ -11,11 +11,11 @@ async function main() {
     console.log('error occurred:', error)
   }
 
-  /*   await axios.get('/users').then(response => {
-      console.log(response)
-    })
-    const allUsers = await axios.get('/users')
-    console.log('List of users:', allUsers.data) */
+  await axios.get('/users').then(response => {
+    console.log(response)
+  })
+  const allUsers = await axios.get('/users')
+  console.log('List of users:', allUsers.data)
 
   /*
     await axios.get('/users/staticOffers').then(res => console.log('static offer list: ', res.data))
@@ -140,4 +140,4 @@ async function main() {
       */
 }
 
-main()
+main().catch(err => console.log(err.data.message ? err.data.message : err))

@@ -11,10 +11,9 @@ const listingList = ['Blue Hills']
 const offerList = ['Special Summer Sale']
 
 /* GET users listing. */
-router.get('/', (req, res) => {
-  const users = User.find().then(users => {
-    res.send(users)
-  })
+router.get('/', async (req, res) => {
+  const users = await User.find()
+  res.send(users)
 })
 
 router.post('/', async (req, res) => {
@@ -26,9 +25,6 @@ router.post('/', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-  /*   const { firstName, lastName } = req.body
-  user = new User({ firstName, lastName })
-  res.send(user) */
 })
 
 router.get('/staticOffers', (req, res) => {
