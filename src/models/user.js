@@ -1,5 +1,15 @@
+const mongoose = require('mongoose')
 const Listing = require('./listing')
 const Offer = require('./offer')
+
+const userSchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  listings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Listing' }],
+  offer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer' }],
+})
+
+module.exports = mongoose.model('User', userSchema)
 
 class User {
   constructor(firstName, lastName) {
@@ -137,4 +147,4 @@ class User {
   }
 }
 
-module.exports = User
+// module.exports = User

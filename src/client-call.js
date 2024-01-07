@@ -4,7 +4,6 @@ axios.defaults.baseURL = 'http://localhost:3000'
 
 async function main() {
   await axios.post('/users', { firstName: 'Merle', lastName: 'Johannsen' })
-
   await axios.get('/users').then(response => {
     console.log(response)
   })

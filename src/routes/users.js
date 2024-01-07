@@ -10,14 +10,25 @@ const listingList = ['Blue Hills']
 
 const offerList = ['Special Summer Sale']
 
+/* GET users listing. */
 router.get('/', (req, res) => {
-  res.send(user)
+  const users = User.find().then(users => {
+    res.send(users)
+  })
 })
 
-router.post('/', (req, res) => {
-  const { firstName, lastName } = req.body
-  user = new User(firstName, lastName)
-  res.send(user)
+router.post('/', async (req, res) => {
+  try {
+    const { firstName, lastName } = req.body
+    user = new User({ firstName, lastName })
+    await user.save() // mongoose method save() to save user to database
+    res.sendStatus(200)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+  /*   const { firstName, lastName } = req.body
+  user = new User({ firstName, lastName })
+  res.send(user) */
 })
 
 router.get('/staticOffers', (req, res) => {
