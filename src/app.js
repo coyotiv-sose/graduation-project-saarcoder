@@ -46,5 +46,5 @@ app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error')
 })
-
+console.log('Hi there from app!')
 module.exports = app
