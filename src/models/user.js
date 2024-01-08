@@ -24,7 +24,7 @@ class User {
     })
 
     this.listings.push(listing)
-    // now we need to save again to update the user with the new listings array
+    // now we need to save again to update the user with the new listings array in MongoDB
     await this.save()
     // returning the created listing so that it can be sent back at the post route for creating a listing
     return listing

@@ -4,10 +4,6 @@ const router = express.Router()
 
 const User = require('../models/user')
 
-const listingList = ['Blue Hills']
-
-const offerList = ['Special Summer Sale']
-
 /* GET users listing, updated to work with MongoDB */
 router.get('/', async (req, res) => {
   // instead of working with a local user variable (updated by the post request), now we work with the first user in the database
@@ -16,18 +12,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   res.send(await User.create({ firstName: req.body.firstName, lastName: req.body.lastName }))
-})
-
-router.get('/staticOffers', (req, res) => {
-  res.send(offerList)
-})
-
-router.get('/staticListings', (req, res) => {
-  res.send(listingList)
-})
-
-router.get('/staticListing', (req, res) => {
-  res.send(listingList[0])
 })
 
 // create a new listing in users list

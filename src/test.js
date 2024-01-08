@@ -13,13 +13,6 @@ async function main() {
   const allUsers = await axios.get('/users')
   console.log('List of users:', allUsers.data)
 
-  /*
-  await axios.get('/users/staticOffers').then(res => console.log('static offer list: ', res.data))
-
-  await axios.get('/users/staticListings').then(res => console.log('static listing: ', res.data[0].toUpperCase()))
-
-  await axios.get('/users/staticListing')
-  */
   // storing in variable to log out the response
   // changing route to dynamic user id (needs underscore)
   const merleListing = await axios.post(`/users/dynamic/${merle.data._id}`, {
@@ -32,7 +25,7 @@ async function main() {
   })
   console.log('merleListing:', merleListing.data)
 
-  await axios.post('/users/dynamic/merle', {
+  await axios.post(`/users/dynamic/${merle.data._id}`, {
     name: 'Blue Hills',
     country: 'USA',
     region: 'Appalachians',
