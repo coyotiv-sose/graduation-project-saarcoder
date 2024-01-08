@@ -3,45 +3,44 @@ const axios = require('axios').default
 axios.defaults.baseURL = 'http://localhost:3000'
 
 async function main() {
-  try {
-    const response1 = await axios.post('/users', { firstName: 'Merle', lastName: 'Johannsen' })
-    const response2 = await axios.post('/users', { firstName: 'Josh', lastName: 'Menning' })
-    console.log(response1.data, response2.data)
-  } catch (error) {
-    console.log('error occurred:', error)
-  }
+  await axios.get('/delete')
+  await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
+  await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
 
-  await axios.get('/users').then(response => {
-    console.log(response)
-  })
+  const merle = await axios.post('/users', { firstName: 'merle', lastName: 'Biggs' })
+  console.log('merle:', merle.data)
+
   const allUsers = await axios.get('/users')
   console.log('List of users:', allUsers.data)
 
   /*
-    await axios.get('/users/staticOffers').then(res => console.log('static offer list: ', res.data))
+  await axios.get('/users/staticOffers').then(res => console.log('static offer list: ', res.data))
 
-    await axios.get('/users/staticListings').then(res => console.log('static listing: ', res.data[0].toUpperCase()))
+  await axios.get('/users/staticListings').then(res => console.log('static listing: ', res.data[0].toUpperCase()))
 
-    await axios.get('/users/staticListing')
+  await axios.get('/users/staticListing')
+  */
+  // storing in variable to log out the response
+  // changing route to dynamic user id (needs underscore)
+  const merleListing = await axios.post(`/users/dynamic/${merle.data._id}`, {
+    name: 'The Green House',
+    country: 'USA',
+    region: 'California',
+    place: 'Olive Beach',
+    numOfRooms: 2,
+    numOfBedsInTotal: 2,
+  })
+  console.log('merleListing:', merleListing.data)
 
-    await axios.post('/users/dynamic/merle', {
-      name: 'The Green House',
-      country: 'USA',
-      region: 'California',
-      place: 'Olive Beach',
-      numOfRooms: 2,
-      numOfBedsInTotal: 2,
-    })
-
-    await axios.post('/users/dynamic/merle', {
-      name: 'Blue Hills',
-      country: 'USA',
-      region: 'Appalachians',
-      place: 'Dusty Mills',
-      numOfRooms: 4,
-      numOfBedsInTotal: 5,
-    })
-
+  await axios.post('/users/dynamic/merle', {
+    name: 'Blue Hills',
+    country: 'USA',
+    region: 'Appalachians',
+    place: 'Dusty Mills',
+    numOfRooms: 4,
+    numOfBedsInTotal: 5,
+  })
+  /*
     await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
 
     await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[1].place))

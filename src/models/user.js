@@ -1,27 +1,33 @@
 const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
 const Listing = require('./listing')
 const Offer = require('./offer')
 
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  listings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Listing' }],
-  offer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer' }],
+  listings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Listing', autopopulate: true }],
+  offer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer', autopopulate: true }],
 })
 
-module.exports = mongoose.model('User', userSchema)
-
 class User {
-  constructor(firstName, lastName) {
-    this.firstName = firstName || ''
-    this.lastName = lastName
-    this.listings = []
-    this.offers = []
-  }
+  async createListing(name, country, region, place, numOfRooms, numOfBedsInTotal) {
+    // using mongoose create method instead of constructor
+    const listing = await Listing.create({
+      owner: this.lastName,
+      name,
+      country,
+      region,
+      place,
+      numOfRooms,
+      numOfBedsInTotal,
+    })
 
-  createListing(name, country, region, place, numOfRooms, numOfBedsInTotal) {
-    const listing = new Listing(this.lastName, name, country, region, place, numOfRooms, numOfBedsInTotal)
     this.listings.push(listing)
+    // now we need to save again to update the user with the new listings array
+    await this.save()
+    // returning the created listing so that it can be sent back at the post route for creating a listing
+    return listing
   }
 
   updateListingName(name, newName) {
@@ -146,5 +152,8 @@ class User {
     this.password = password
   }
 }
+// add methods to schema
+userSchema.loadClass(User)
 
-// module.exports = User
+userSchema.plugin(autopopulate)
+module.exports = mongoose.model('User', userSchema)

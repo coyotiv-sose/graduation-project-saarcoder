@@ -1,32 +1,29 @@
+const mongoose = require('mongoose')
+
+const listingSchema = new mongoose.Schema({
+  owner: String,
+  name: String,
+  country: String,
+  region: String,
+  place: String,
+  numOfRooms: Number,
+  numOfBedsInTotal: Number,
+  numOfDoubleBeds: Number,
+  cribOrCotAvailable: Boolean,
+  kitchen: Boolean,
+  kettle: Boolean,
+  fridge: Boolean,
+  freezer: Boolean,
+  stove: Boolean,
+  oven: Boolean,
+  highChairAvailable: Boolean,
+  washingMachine: Boolean,
+  linen: Boolean,
+  underfloorHeating: Boolean,
+  laminateFlooring: Boolean,
+  warmWaterAvailable: Boolean,
+})
 class Listing {
-  numOfDoubleBeds
-
-  cribOrCotAvailable
-
-  kitchen
-
-  kettle
-
-  fridge
-
-  freezer
-
-  stove
-
-  oven
-
-  highChairAvailable
-
-  washingMachine
-
-  linen
-
-  underfloorHeating
-
-  laminateFlooring
-
-  warmWaterAvailable
-
   /*   _destinationType = ['mountains', 'beach', 'city']
 
     #postCode
@@ -34,16 +31,6 @@ class Listing {
     #street
 
     #houseNumber */
-
-  constructor(owner, name, country, region, place, numOfRooms, numOfBedsInTotal) {
-    this.owner = owner
-    this.name = name
-    this.place = place
-    this.country = country
-    this.region = region
-    this.numOfRooms = numOfRooms
-    this.numOfBedsInTotal = numOfBedsInTotal
-  }
 
   /*   get retrievePostCode() {
     return this.#postCode
@@ -98,4 +85,6 @@ class Listing {
     return this
   }
 }
-module.exports = Listing
+
+listingSchema.loadClass(Listing)
+module.exports = mongoose.model('Listing', listingSchema)
