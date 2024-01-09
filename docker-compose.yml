@@ -1,10 +1,23 @@
+version: '3'
 services:
   backend:
-    image: cicd102
-    build: .
+    image: buzzapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
     ports:
       - 3000:3000
     environment:
-      - MONGODB_CONNECTION_STRING=mongodb+srv://<username>:<password>@<clustername>.3csuksk.mongodb.net/test1?retryWrites=true&w=majority
+      - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017/test2
+
     volumes:
       - ./src:/app/src
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
