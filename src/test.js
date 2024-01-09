@@ -4,12 +4,13 @@ axios.defaults.baseURL = 'http://localhost:3000'
 
 async function main() {
   await axios.get('/delete')
-  await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
-  await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
+  const trish = await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
+  const pete = await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
 
-  const merle = await axios.post('/users', { firstName: 'merle', lastName: 'Biggs' })
-  console.log('merle:', merle.data)
+  const merle = await axios.post('/users', { firstName: 'Merle', lastName: 'Biggs' })
+  console.log('Merle:', merle.data)
 
+  // TODO: this just gets the first user in the database, not the one we just created
   const allUsers = await axios.get('/users')
   console.log('List of users:', allUsers.data)
 
@@ -33,12 +34,17 @@ async function main() {
     numOfRooms: 4,
     numOfBedsInTotal: 5,
   })
+
+  await axios
+    .get(`/users/dynamic/${merle.data._id}`)
+    .then(res => console.log("Merle's first new listing is in:", res.data[0].place))
+    .catch(err => console.log(err.data.message ? err.data.message : err))
+
+  await axios
+    .get(`/users/dynamic/${merle.data._id}`)
+    .then(res => console.log("Merle's second new listing is in:", res.data[1].place))
   /*
-    await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[0].place))
-
-    await axios.get('/users/dynamic/merle').then(res => console.log('new listing:', res.data[1].place))
-
-    await axios.post('/users/newOffer/merle', {
+    await axios.post(´/users/newOffer/${merle.data._id}´, {
       listing: 'The Green House',
       offerName: 'Christmas Rental The Small One',
       startString: '20.12.2023',
@@ -48,9 +54,9 @@ async function main() {
       price: 350,
     })
 
-    await axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[0].offerName))
+    await axios.get(´/users/newOffer/${merle.data._id}´).then(res => console.log('new offer: ', res.data[0].offerName))
 
-    await axios.post('/users/newOffer/merle', {
+    await axios.post(´/users/newOffer/${merle.data._id}´, {
       listing: 'The Green House',
       offerName: 'Spring Rental Small Aptmt',
       startString: '27.03.2024',
@@ -60,9 +66,9 @@ async function main() {
       price: 270,
     })
 
-    await axios.get('/users/newOffer/merle').then(res => console.log('new offer: ', res.data[1].offerName))
+    await axios.get(´/users/newOffer/${merle.data._id}´).then(res => console.log('new offer: ', res.data[1].offerName))
 
-    await axios.post('/users/newOffer/merle', {
+    await axios.post(´/users/newOffer/${merle.data._id}´, {
       listing: 'Blue Hills',
       offerName: 'Spring Rental',
       startString: '01.04.2024',
@@ -74,10 +80,10 @@ async function main() {
     })
 
     await axios
-      .get('/users/newOffer/merle')
+      .get(´/users/newOffer/${merle.data._id}`)
       .then(res => console.log('new offer: ', res.data[2].offerName, '- currency is set to:', res.data[2].currency))
 
-    await axios.post('/users/newOffer/merle', {
+    await axios.post(`/users/newOffer/${merle.data._id}`, {
       listing: 'The Green House',
       offerName: 'Spring Rental Big Aptmnt',
       startString: '27.03.24',
@@ -89,12 +95,12 @@ async function main() {
     })
 
     await axios
-      .get('/users/newOffer/merle')
+      .get(`/users/newOffer/${merle.data._id}`)
       .then(res => console.log('new offer: ', res.data[3].offerName, '- currency is set to:', res.data[3].currency))
 
-    await axios.get('/users/Merle/listings').then(res => console.log(res.data.map(listing => listing.place)))
+    await axios.get(`/users/Merle/listings`).then(res => console.log(res.data.map(listing => listing.place)))
 
-    await axios.put('/users/Merle/updateAddAuctionToOffer', {
+    await axios.put(`/users/Merle/updateAddAuctionToOffer`, {
       offer: 'Christmas Rental The Small One',
       auction: 'Late Fall Auction',
       startDate: '20.09.2023',

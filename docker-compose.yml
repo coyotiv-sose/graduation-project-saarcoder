@@ -1,10 +1,10 @@
 services:
   backend:
     image: cicd102
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
       - 3000:3000
     environment:
       - MONGODB_CONNECTION_STRING=mongodb+srv://<username>:<password>@<clustername>.3csuksk.mongodb.net/test1?retryWrites=true&w=majority
+    volumes:
+      - ./src:/app/src

@@ -26,7 +26,10 @@ router.post('/dynamic/:userId', async (req, res) => {
   res.send(listing)
 })
 
-router.get('/dynamic/:userId', async (req, res) => res.send(await User.listings))
+router.get('/dynamic/:userId', async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  res.send(user.listings)
+})
 
 router.post('/newOffer/:userId', async (req, res) => {
   const { listing, offerName, startString, checkIn, endString, checkOut, price, currency } = req.body

@@ -22,7 +22,7 @@ class User {
       numOfRooms,
       numOfBedsInTotal,
     })
-
+    // this is just pushing the objectId of the listing, not the properties of the listing
     this.listings.push(listing)
     // now we need to save again to update the user with the new listings array in MongoDB
     await this.save()
