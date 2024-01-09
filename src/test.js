@@ -3,7 +3,7 @@ const axios = require('axios').default
 axios.defaults.baseURL = 'http://localhost:3000'
 
 async function main() {
-  await axios.get('/delete')
+  await axios.get('/db')
   const trish = await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
   const pete = await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
 

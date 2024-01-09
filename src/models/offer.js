@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
 
 const offerSchema = new mongoose.Schema({
   initiator: String,
@@ -37,4 +38,5 @@ class Offer {
   }
 }
 offerSchema.loadClass(Offer)
+offerSchema.plugin(autopopulate)
 module.exports = mongoose.model('Offer', offerSchema)

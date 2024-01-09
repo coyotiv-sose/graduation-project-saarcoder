@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
 
 const listingSchema = new mongoose.Schema({
   owner: String,
@@ -87,4 +88,5 @@ class Listing {
 }
 
 listingSchema.loadClass(Listing)
+listingSchema.plugin(autopopulate)
 module.exports = mongoose.model('Listing', listingSchema)
