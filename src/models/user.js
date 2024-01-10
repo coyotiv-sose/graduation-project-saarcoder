@@ -146,13 +146,13 @@ class User {
     selected.minPrice = price
   }
 
-  async readListingsInAuction(auction) {
+  readListingsInAuction(auction) {
     const searchList = this.offers.filter(el => el.auction === auction)
     // restrict display to offer names:
     return searchList.map(el => el.offerName)
   }
 
-  async addEmail(email, password) {
+  addEmail(email, password) {
     this.email = email
     this.password = password
   }
