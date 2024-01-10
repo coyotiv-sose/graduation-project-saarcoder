@@ -131,7 +131,8 @@ class User {
       end = new Date(startYear, startMonth, startDay, endTime)
     }
     const selected = this.offers.filter(el => el.offerName === offer)[0]
-    selected.addAuctionProps(auction, start, end)
+    const updated = selected.addAuctionProps(auction, start, end)
+    return updated
   }
 
   async updateOfferRemoveAuction(offer) {

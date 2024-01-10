@@ -38,23 +38,26 @@ router.post('/newOffer/:userId', async (req, res) => {
   res.send(offer)
 })
 
-router.get('/newOffer/:userId', async (req, res) => res.send(await User.offers))
+router.get('/newOffer/:userId', async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  res.send(user.offers)
+})
 
 router.get('/:userId/listings', async (req, res) => {
-  // new user does not need to be created again, as he was created by former post request from client
-  if ((await User.firstName) === req.params.userId) res.send(await User.listings)
+  const user = await User.findById(req.params.userId)
+  res.send(user.listings)
 })
 
 router.put('/:userId/updateAddAuctionToOffer', async (req, res) => {
   const { offer, auction, startDate, startTime, endTime } = req.body
-  if ((await User.firstName) === req.params.userId) {
-    await User.updateOfferAddAuction(offer, auction, startDate, startTime, endTime)
-  }
-  res.sendStatus(200)
+  const user = await User.findById(req.params.userId)
+  const offerSetForAuction = await user.updateOfferAddAuction(offer, auction, startDate, startTime, endTime)
+  res.send(offerSetForAuction)
 })
 
 router.get('/:userId/offers', async (req, res) => {
-  if ((await User.firstName) === req.params.userId) res.send(await User.offers)
+  const user = await User.findById(req.params.userId)
+  res.send(user.offers)
 })
 
 router.delete('/:userId/deleteOffer/:resource', async (req, res) => {
