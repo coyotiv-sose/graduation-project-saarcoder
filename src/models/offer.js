@@ -21,7 +21,7 @@ class Offer {
     return offer
   } */
 
-  addAuctionProps(auction, start, end) {
+  async addAuctionProps(auction, start, end) {
     const offer = this
     offer.auction = auction
     offer.auctionStart = start
@@ -29,7 +29,7 @@ class Offer {
     return offer
   }
 
-  removeAuctionProps() {
+  async removeAuctionProps() {
     const offer = this
     offer.auction = undefined
     offer.auctionStart = undefined

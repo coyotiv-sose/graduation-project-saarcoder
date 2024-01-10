@@ -43,20 +43,20 @@ async function main() {
   await axios
     .get(`/users/dynamic/${merle.data._id}`)
     .then(res => console.log("Merle's second new listing is in:", res.data[1].place))
+
+  await axios.post(`/users/newOffer/${merle.data._id}`, {
+    listing: 'The Green House',
+    offerName: 'Christmas Rental The Small One',
+    startString: '20.12.2023',
+    checkIn: '17',
+    endString: '28.12.2023',
+    checkOut: '09',
+    price: 350,
+  })
   /*
-    await axios.post(´/users/newOffer/${merle.data._id}´, {
-      listing: 'The Green House',
-      offerName: 'Christmas Rental The Small One',
-      startString: '20.12.2023',
-      checkIn: '17',
-      endString: '28.12.2023',
-      checkOut: '09',
-      price: 350,
-    })
+    await axios.get(`/users/newOffer/${merle.data._id}`).then(res => console.log('new offer: ', res.data[0].offerName))
 
-    await axios.get(´/users/newOffer/${merle.data._id}´).then(res => console.log('new offer: ', res.data[0].offerName))
-
-    await axios.post(´/users/newOffer/${merle.data._id}´, {
+    await axios.post(`/users/newOffer/${merle.data._id}`, {
       listing: 'The Green House',
       offerName: 'Spring Rental Small Aptmt',
       startString: '27.03.2024',
@@ -66,9 +66,9 @@ async function main() {
       price: 270,
     })
 
-    await axios.get(´/users/newOffer/${merle.data._id}´).then(res => console.log('new offer: ', res.data[1].offerName))
+    await axios.get(`/users/newOffer/${merle.data._id}`).then(res => console.log('new offer: ', res.data[1].offerName))
 
-    await axios.post(´/users/newOffer/${merle.data._id}´, {
+    await axios.post(`/users/newOffer/${merle.data._id}`, {
       listing: 'Blue Hills',
       offerName: 'Spring Rental',
       startString: '01.04.2024',
@@ -80,7 +80,7 @@ async function main() {
     })
 
     await axios
-      .get(´/users/newOffer/${merle.data._id}`)
+      .get(`/users/newOffer/${merle.data._id}`)
       .then(res => console.log('new offer: ', res.data[2].offerName, '- currency is set to:', res.data[2].currency))
 
     await axios.post(`/users/newOffer/${merle.data._id}`, {
@@ -138,4 +138,4 @@ async function main() {
       */
 }
 
-main().catch(err => console.log(err.data.message ? err.data.message : err))
+main().catch(err => console.log(err))

@@ -53,7 +53,7 @@ class Listing {
     this.destinationType = type
   } */
 
-  addRemainingProps({
+  async addRemainingProps({
     numOfDoubleBeds,
     cribOrCotAvailable,
     kitchen,

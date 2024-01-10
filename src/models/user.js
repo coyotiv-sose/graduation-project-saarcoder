@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   listings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Listing', autopopulate: true }],
-  offer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer', autopopulate: true }],
+  offers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer', autopopulate: true }],
 })
 
 class User {
@@ -30,19 +30,19 @@ class User {
     return listing
   }
 
-  updateListingName(name, newName) {
+  async updateListingName(name, newName) {
     const listingIndex = this.listings.findIndex(el => el.name === name)
     this.listings[listingIndex].name = newName
     // TODO: update related offers
   }
 
-  updateListingOwner(name, newOwner) {
+  async updateListingOwner(name, newOwner) {
     const listingIndex = this.listings.findIndex(el => el.name === name)
     this.listings[listingIndex].owner = newOwner
     // TODO: update related offers
   }
 
-  updateRemainingListingProps(
+  async updateRemainingListingProps(
     listingName,
     numOfDoubleBeds,
     cribOrCotAvailable,
@@ -78,21 +78,21 @@ class User {
     })
   }
 
-  deleteListing(listing) {
+  async deleteListing(listing) {
     this.listings.splice(
       this.listings.findIndex(el => el.name === listing),
       1
     )
   }
 
-  getListingNames() {
+  async getListingNames() {
     const listingNames = []
     // just show the names, not objects:
     this.listings.forEach(el => listingNames.push(el.name))
     return listingNames
   }
 
-  createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency) {
+  async createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency) {
     const names = this.listings.map(el => el.name)
     if (names.includes(listing)) {
       const initiator = this.lastName
@@ -103,17 +103,20 @@ class User {
       endYear = endYear.padStart(4, '20')
       const start = new Date(startYear, (startMonth -= 1), startDay, checkIn)
       const end = new Date(endYear, (endMonth -= 1), endDay, checkOut)
-      const offer = Offer.create({ initiator, listing, offerName, start, end, price, currency })
+      const offer = await Offer.create({ initiator, listing, offerName, start, end, price, currency })
       this.offers.push(offer)
-    } else throw new Error('Please add your listing first, then enter the offer period')
+      await this.save()
+      return offer
+    }
+    throw new Error('Please add your listing first, then enter the offer period')
   }
 
-  deleteOffer(offer) {
+  async deleteOffer(offer) {
     const elIndex = this.offers.findIndex(el => el.offerName === offer)
     this.offers.splice(elIndex, 1)
   }
 
-  updateOfferAddAuction(offer, auction, startDate, startTime, endTime) {
+  async updateOfferAddAuction(offer, auction, startDate, startTime, endTime) {
     if (typeof startDate === 'undefined') throw new Error('Please enter a date for when you want to start the auction')
     let [startDay, startMonth, startYear] = startDate.split('.')
     startYear = startYear.padStart(4, '20')
@@ -131,23 +134,23 @@ class User {
     selected.addAuctionProps(auction, start, end)
   }
 
-  updateOfferRemoveAuction(offer) {
+  async updateOfferRemoveAuction(offer) {
     const selected = this.offers.filter(el => el.offerName === offer)[0]
     selected.removeAuctionProps()
   }
 
-  updateOfferChangePrice(offerName, price) {
+  async updateOfferChangePrice(offerName, price) {
     const selected = this.offers.filter(el => el.offerName === offerName)[0]
     selected.minPrice = price
   }
 
-  readListingsInAuction(auction) {
+  async readListingsInAuction(auction) {
     const searchList = this.offers.filter(el => el.auction === auction)
     // restrict display to offer names:
     return searchList.map(el => el.offerName)
   }
 
-  addEmail(email, password) {
+  async addEmail(email, password) {
     this.email = email
     this.password = password
   }

@@ -33,8 +33,9 @@ router.get('/dynamic/:userId', async (req, res) => {
 
 router.post('/newOffer/:userId', async (req, res) => {
   const { listing, offerName, startString, checkIn, endString, checkOut, price, currency } = req.body
-  await User.createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency)
-  res.sendStatus(200)
+  const user = await User.findById(req.params.userId)
+  const offer = await user.createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency)
+  res.send(offer)
 })
 
 router.get('/newOffer/:userId', async (req, res) => res.send(await User.offers))
