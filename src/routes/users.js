@@ -15,10 +15,10 @@ router.post('/', async (req, res) => {
 })
 
 // create a new listing in users list
-router.post('/dynamic/:userId', async (req, res) => {
+router.post('/listings', async (req, res) => {
   const { name, country, region, place, numOfRooms, numOfBedsInTotal } = req.body
-  const user = await User.findById(req.params.userId)
-  console.log('request', req.body, 'uid from params:', req.params.userId)
+  const user = await User.findById(req.body.ownerId)
+  console.log('request', req.body, 'uid from request body:', req.body.ownerId)
   console.log('user:', user)
 
   const listing = await user.createListing(name, country, region, place, numOfRooms, numOfBedsInTotal)
@@ -26,19 +26,19 @@ router.post('/dynamic/:userId', async (req, res) => {
   res.send(listing)
 })
 
-router.get('/dynamic/:userId', async (req, res) => {
+router.get('/listings/:userId', async (req, res) => {
   const user = await User.findById(req.params.userId)
   res.send(user.listings)
 })
 
-router.post('/newOffer/:userId', async (req, res) => {
+router.post('/offers', async (req, res) => {
   const { listing, offerName, startString, checkIn, endString, checkOut, price, currency } = req.body
-  const user = await User.findById(req.params.userId)
+  const user = await User.findById(req.body.ownerId)
   const offer = await user.createOffer(listing, offerName, startString, checkIn, endString, checkOut, price, currency)
   res.send(offer)
 })
 
-router.get('/newOffer/:userId', async (req, res) => {
+router.get('/offers/:userId', async (req, res) => {
   const user = await User.findById(req.params.userId)
   res.send(user.offers)
 })
@@ -48,7 +48,7 @@ router.get('/:userId/listings', async (req, res) => {
   res.send(user.listings)
 })
 
-router.put('/:userId/updateAddAuctionToOffer', async (req, res) => {
+router.put('/:userId/offers/:auctionName', async (req, res) => {
   const { offer, auction, startDate, startTime, endTime } = req.body
   const user = await User.findById(req.params.userId)
   const offerSetForAuction = await user.updateOfferAddAuction(offer, auction, startDate, startTime, endTime)
@@ -60,17 +60,17 @@ router.get('/:userId/offers', async (req, res) => {
   res.send(user.offers)
 })
 
-router.delete('/:userId/deleteOffer/:resource', async (req, res) => {
-  const offer = req.params.resource
+router.delete('/:userId/offers/:offerId', async (req, res) => {
+  const offer = req.params.offerId
   const user = await User.findById(req.params.userId)
   await user.deleteOffer(offer)
   res.sendStatus(200)
 })
 
-router.get('/:userId/search/:offerForAuction', async (req, res) => {
-  const { offerForAuction } = req.params
+router.get('/:userId/offers/auction/:auctionName', async (req, res) => {
+  const { auctionName } = req.params.auctionName
   const user = await User.findById(req.params.userId)
-  res.send(await user.readListingsInAuction(offerForAuction))
+  res.send(await user.readListingsInAuction(auctionName))
 })
 
 module.exports = router

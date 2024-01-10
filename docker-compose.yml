@@ -10,7 +10,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017/test2
+      - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017/localtest
+      #- MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
 
     volumes:
       - ./src:/app/src
