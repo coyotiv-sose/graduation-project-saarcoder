@@ -114,6 +114,7 @@ class User {
   async deleteOffer(offer) {
     const elIndex = this.offers.findIndex(el => el.offerName === offer)
     this.offers.splice(elIndex, 1)
+    await this.save()
   }
 
   async updateOfferAddAuction(offer, auction, startDate, startTime, endTime) {

@@ -127,15 +127,14 @@ async function main() {
       res.data.filter(el => el.auction)
     )
   )
-  /*
-    await axios.delete('/users/Merle/deleteOffer/Christmas Rental The Small One')
 
-    await axios.get('/users/Merle/offers').then(res => console.log("Merle's updated offers:", res.data))
+  await axios.delete(`/users/${merle.data._id}/deleteOffer/Christmas Rental The Small One`)
 
-    await axios
-      .get('/users/Merle/search/Late Fall Auction')
-      .then(res => console.log('you have planned these offers to be included in this auction:', res.data))
-      */
+  await axios.get(`/users/${merle.data._id}/offers`).then(res => console.log("Merle's updated offers:", res.data))
+
+  await axios
+    .get(`/users/${merle.data._id}/search/Late Fall Auction`)
+    .then(res => console.log('you have planned these offers to be included in this auction:', res.data))
 }
 
 main().catch(err => console.log(err))

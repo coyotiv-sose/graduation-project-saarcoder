@@ -29,6 +29,7 @@ class Offer {
     offer.auction = undefined
     offer.auctionStart = undefined
     offer.auctionEnd = undefined
+    await this.save()
     return offer
   }
 }

@@ -62,15 +62,15 @@ router.get('/:userId/offers', async (req, res) => {
 
 router.delete('/:userId/deleteOffer/:resource', async (req, res) => {
   const offer = req.params.resource
-  if ((await User.firstName) === req.params.userId) {
-    await User.deleteOffer(offer)
-    res.sendStatus(200)
-  }
+  const user = await User.findById(req.params.userId)
+  await user.deleteOffer(offer)
+  res.sendStatus(200)
 })
 
 router.get('/:userId/search/:offerForAuction', async (req, res) => {
-  const { userId, offerForAuction } = req.params
-  if ((await User.firstName) === userId) res.send(await User.readListingsInAuction(offerForAuction))
+  const { offerForAuction } = req.params
+  const user = await User.findById(req.params.userId)
+  res.send(await user.readListingsInAuction(offerForAuction))
 })
 
 module.exports = router
