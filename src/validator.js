@@ -1,6 +1,4 @@
 class Validator {
-  static validatePw = pw => {
-    return pw.length >= 8
-  }
+  static validatePw = pw => pw.includes('*')
 }
 module.exports = Validator
