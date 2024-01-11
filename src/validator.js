@@ -1,10 +1,6 @@
 class Validator {
   static validatePw = pw => {
-    return pw.length >= 8
-  }
-
-  static validateAsterisk = pw => {
-    return pw.includes('*')
+    return pw.length >= 8 && pw.includes('*')
   }
 }
 module.exports = Validator
