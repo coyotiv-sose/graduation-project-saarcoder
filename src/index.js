@@ -1,54 +1,150 @@
-// go to client-call.js to see axios calls...
+const axios = require('axios').default
 
-const User = require('./models/user')
+axios.defaults.baseURL = 'http://localhost:3000'
 
-const ron = new User('Ron', 'Johnson')
+async function main() {
+  await axios.get('/db')
+  await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
+  const pete = await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
+  console.log('Pete:', pete.data)
 
-ron.createListing('The Green House', 'USA', 'California', 'Olive Beach', 2, 2)
+  const merle = await axios.post('/users', { firstName: 'Merle', lastName: 'Biggs' })
+  console.log('Merle:', merle.data)
 
-ron.createListing('Blue Hills', 'USA', 'Appalachians', 'Dusty Mills', 4, 5)
+  // get all users
+  const allUsers = await axios.get('/users')
+  console.log('List of users:', allUsers.data)
 
-ron.createOffer('The Green House', 'Christmas Rental The Small One', '20.12.2023', '17', '28.12.2023', '09', 350)
+  // get one user
+  const merleUser = await axios.get(`/users/${merle.data._id}`)
+  console.log('Merle:', merleUser.data)
+  // storing in variable to log out the response
+  // changing route to dynamic user id (needs underscore)
+  const merleListing = await axios.post('/users/listings', {
+    name: 'The Green House',
+    country: 'USA',
+    region: 'California',
+    place: 'Olive Beach',
+    numOfRooms: 2,
+    numOfBedsInTotal: 2,
+    ownerId: merle.data._id,
+  })
+  console.log('merleListing:', merleListing.data)
 
-ron.createOffer('The Green House', 'Spring Rental Small Aptmt', '27.03.2024', '17', '04.03.24', '9', 270)
+  await axios.post('/users/listings', {
+    name: 'Blue Hills',
+    country: 'USA',
+    region: 'Appalachians',
+    place: 'Dusty Mills',
+    numOfRooms: 4,
+    numOfBedsInTotal: 5,
+    ownerId: merle.data._id,
+  })
 
-ron.createOffer(
-  'Blue Hills',
-  'Spring Rental',
-  '01.04.2024',
-  '19',
-  '08.04.2024',
-  '10',
-  '575',
-  'SF',
-  'First spring rental auction at the end of Jan'
-)
+  await axios
+    .get(`/users/listings/${merle.data._id}`)
+    .then(res => console.log("Merle's first new listing is in:", res.data[0].place))
+    .catch(err => console.log(err.data.message ? err.data.message : err))
 
-ron.createOffer('The Green House', 'Spring Rental Big Aptmnt', '27.03.24', '16', '04.03.2024', '10', '470', 'USD')
+  await axios
+    .get(`/users/listings/${merle.data._id}`)
+    .then(res => console.log("Merle's second new listing is in:", res.data[1].place))
 
-ron.updateOfferAddAuction('Christmas Rental The Small One', 'Late Fall Auction', '20.09.2023', '15', '15:30')
+  await axios.post('/users/offers', {
+    listing: 'The Green House',
+    offerName: 'Christmas Rental The Small One',
+    startString: '20.12.2023',
+    checkIn: '17',
+    endString: '28.12.2023',
+    checkOut: '09',
+    price: 350,
+    ownerId: merle.data._id,
+  })
 
-ron.updateOfferAddAuction('Spring Rental Big Aptmnt', 'Late Fall Auction', '20.09.2023', '16', '16:15')
+  await axios.get(`/users/offers/${merle.data._id}`).then(res => console.log('new offer: ', res.data[0].offerName))
 
-// ron.updateOfferRemoveAuction('Christmas Rental The Small One')
+  await axios.post('/users/offers', {
+    listing: 'The Green House',
+    offerName: 'Spring Rental Small Aptmt',
+    startString: '27.03.2024',
+    checkIn: '17',
+    endString: '04.03.24',
+    checkOut: '09',
+    price: 270,
+    ownerId: merle.data._id,
+  })
 
-ron.deleteOffer('Spring Rental')
+  await axios.get(`/users/offers/${merle.data._id}`).then(res => console.log('new offer: ', res.data[1].offerName))
 
-console.log(
-  'you have planned these offers to be included in this auction: ',
-  ron.readListingsInAuction('Late Fall Auction')
-)
+  await axios.post('/users/offers', {
+    listing: 'Blue Hills',
+    offerName: 'Spring Rental',
+    startString: '01.04.2024',
+    checkIn: '19',
+    endString: '08.04.2024',
+    checkOut: '10',
+    price: 575,
+    currency: 'SF',
+    ownerId: merle.data._id,
+  })
 
-// ron.deleteListing('Blue Hills')
+  await axios
+    .get(`/users/offers/${merle.data._id}`)
+    .then(res => console.log('new offer: ', res.data[2].offerName, '- currency is set to:', res.data[2].currency))
 
-ron.updateListingName('The Green House', 'Velvet Blue')
+  await axios.post('/users/offers', {
+    listing: 'The Green House',
+    offerName: 'Spring Rental Big Aptmnt',
+    startString: '27.03.24',
+    checkIn: '16',
+    endString: '04.03.2024',
+    checkOut: '10',
+    price: 470,
+    currency: 'USD',
+    ownerId: merle.data._id,
+  })
 
-ron.updateListingOwner('Velvet Blue', 'Middleton')
+  await axios
+    .get(`/users/offers/${merle.data._id}`)
+    .then(res => console.log('new offer: ', res.data[3].offerName, '- currency is set to:', res.data[3].currency))
 
-ron.updateRemainingListingProps('Velvet Blue', '3', '0', '1', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1')
+  await axios.get(`/users/${merle.data._id}/listings`).then(res => console.log(res.data.map(listing => listing.place)))
 
-ron.updateRemainingListingProps('Blue Hills', '3', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1')
+  await axios.put(`/users/${merle.data._id}/offers/Late Fall Auction`, {
+    offer: 'Christmas Rental The Small One',
+    auction: 'Late Fall Auction',
+    startDate: '20.09.2023',
+    startTime: '15',
+    endTime: '15:30',
+  })
 
-ron.updateOfferChangePrice('Spring Rental Big Aptmnt', 300)
+  await axios
+    .get(`/users/${merle.data._id}/offers`)
+    .then(res => console.log('new auction:', res.data.find(el => el.auction === 'Late Fall Auction').auction))
 
-console.log(ron)
+  await axios.put(`/users/${merle.data._id}/offers/Late Fall Auction`, {
+    offer: 'Spring Rental Big Aptmnt',
+    auction: 'Late Fall Auction',
+    startDate: '20.09.2023',
+    startTime: '16',
+    endTime: '16:15',
+  })
+
+  // filter offers that are set up for an auction:
+  await axios.get(`/users/${merle.data._id}/offers`).then(res =>
+    console.log(
+      'new auction:',
+      res.data.filter(el => el.auction)
+    )
+  )
+
+  await axios.delete(`/users/${merle.data._id}/offers/Christmas Rental The Small One`)
+
+  await axios.get(`/users/${merle.data._id}/offers`).then(res => console.log("Merle's updated offers:", res.data))
+
+  await axios
+    .get(`/users/${merle.data._id}/offers/auction/Late Fall Auction`)
+    .then(res => console.log('you have planned these offers to be included in this auction:', res.data))
+}
+
+main().catch(err => console.log(err))
