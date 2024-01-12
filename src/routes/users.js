@@ -4,12 +4,16 @@ const router = express.Router()
 
 const User = require('../models/user')
 
-/* GET users listing, updated to work with MongoDB */
+/* GET users, updated to work with MongoDB */
 router.get('/', async (req, res) => {
-  // instead of working with a local user variable (updated by the post request), now we work with the first user in the database
-  res.send(await User.findOne())
+  // instead of working with a local user variable (updated by the post request), now we work with the database
+  res.send(await User.find())
 })
 
+router.get('/:userId', async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  res.send(user)
+})
 router.post('/', async (req, res) => {
   res.send(await User.create({ firstName: req.body.firstName, lastName: req.body.lastName }))
 })

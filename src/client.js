@@ -5,15 +5,19 @@ axios.defaults.baseURL = 'http://localhost:3000'
 async function main() {
   await axios.get('/db')
   await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
-  await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
+  const pete = await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
+  console.log('Pete:', pete.data)
 
   const merle = await axios.post('/users', { firstName: 'Merle', lastName: 'Biggs' })
   console.log('Merle:', merle.data)
 
-  // TODO: this just gets the first user in the database, not the one we just created
+  // get all users
   const allUsers = await axios.get('/users')
   console.log('List of users:', allUsers.data)
 
+  // get one user
+  const merleUser = await axios.get(`/users/${merle.data._id}`)
+  console.log('Merle:', merleUser.data)
   // storing in variable to log out the response
   // changing route to dynamic user id (needs underscore)
   const merleListing = await axios.post('/users/listings', {
