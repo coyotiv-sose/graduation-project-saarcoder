@@ -1,9 +1,9 @@
 version: '3'
 services:
   backend:
-    image: buzzapi
+    image: backend
     build:
-      context: .
+      context: backend
       dockerfile: Dockerfile
     depends_on:
       - mongodb
@@ -14,7 +14,7 @@ services:
       #- MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
 
     volumes:
-      - ./src:/app/src
+      - ./backend/src:/app/src
 
   mongodb:
     image: mongo
