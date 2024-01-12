@@ -9,10 +9,10 @@
     "dev": "nodemon ./bin/www",
     "eslint:check": "npx eslint .",
     "eslint:fix": "npx eslint --fix .",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:wc": "jest --watch --coverage"
+    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest",
+    "test:watch": "DOTENV_CONFIG_PATH=./.env.test.local jest --watch",
+    "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage",
+    "test:wc": "DOTENV_CONFIG_PATH=./.env.test.local jest --watch --coverage"
   },
   "devDependencies": {
     "eslint": "^8.19.0",
