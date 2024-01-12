@@ -14,7 +14,18 @@ services:
       #- MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
 
     volumes:
-      - ./backend/src:/app/src
+      - ./backend/src:/src
+
+  frontend:
+    image: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
 
   mongodb:
     image: mongo
