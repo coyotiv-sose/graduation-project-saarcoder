@@ -12,4 +12,4 @@ ADD bin ./bin
 
 ADD src ./src
 
-CMD [ "nodemon" ]
+CMD [ "npm", "run", "dev" ]
