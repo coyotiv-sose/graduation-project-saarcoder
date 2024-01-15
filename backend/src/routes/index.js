@@ -16,4 +16,7 @@ router.get('/db', async (req, res) => {
   await Offer.deleteMany()
   res.send('deleted')
 })
+router.get('/ping', (req, res) => {
+  res.send('pong')
+})
 module.exports = router
