@@ -1,4 +1,19 @@
-<script setup></script>
+<script setup>
+import axios from 'axios'
+async function addTrish() {
+  const { data: newUser } = await axios.post('http://localhost:3000/users', {
+    firstName: 'Trish',
+    lastName: 'Hendricks'
+  })
+  console.log(newUser)
+}
+async function getUsers() {
+  const { data: allUsers } = await axios.get('http://localhost:3000/users')
+  console.log(allUsers)
+}
+addTrish()
+getUsers()
+</script>
 <template>
   <div class="item">
     <i>
