@@ -9,7 +9,7 @@
     "dev": "nodemon ./bin/www",
     "eslint:check": "npx eslint .",
     "eslint:fix": "npx eslint --fix .",
-    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest",
+    "test": "DOTENV_CONFIG_PATH=./.env.test.local NODE_OPTIONS='--experimental-vm-modules --experimental-specifier-resolution=node' jest",
     "test:watch": "DOTENV_CONFIG_PATH=./.env.test.local jest --watch",
     "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage",
     "test:wc": "DOTENV_CONFIG_PATH=./.env.test.local jest --watch --coverage"
