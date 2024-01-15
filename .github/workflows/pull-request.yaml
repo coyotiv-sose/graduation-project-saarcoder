@@ -1,8 +1,8 @@
 name: Backend Tests
 on:
-  pull_requests:
-  paths:
-    - 'backend/**'
+  pull_request:
+    paths:
+      - 'backend/**'
 
 jobs:
   test:
