@@ -4,6 +4,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
+const session = require('express-session')
+
 require('dotenv').config()
 require('./database-connection')
 
@@ -16,12 +18,24 @@ const listingsRouter = require('./routes/listings')
 const offersRouter = require('./routes/offers')
 
 const app = express()
-
+console.log('variable:', process.env.VITE_ENVIRONMENT)
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
 app.use(cors())
+app.use(
+  session({
+    secret: 'secretPW', // process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
+      httpOnly: process.env.ENVIRONMENT === 'production',
+    },
+  })
+)
+
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
