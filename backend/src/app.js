@@ -6,12 +6,14 @@ const logger = require('morgan')
 const cors = require('cors')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const mongoose = require('mongoose')
 
 require('dotenv').config()
 require('./database-connection')
 
 console.log(process.env.MONGODB_CONNECTION_STRING)
 
+const { constants } = require('crypto')
 const indexRouter = require('./routes/index')
 const guestsRouter = require('./routes/guests')
 const usersRouter = require('./routes/users')
@@ -24,6 +26,7 @@ console.log('variable:', process.env.VITE_ENVIRONMENT)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
+let connectionPromise = mongoose.connection.asPromise().then(connection => (connectionPromise = connection.getClient()))
 app.use(cors())
 app.use(
   session({
@@ -36,8 +39,9 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
     },
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_CONNECTION_STRING,
-      stringify: false, //  makes it an object
+      clientPromise: connectionPromise,
+      // mongoUrl: process.env.MONGODB_CONNECTION_STRING,
+      stringify: false, //  transform cookie string to an object
     }),
   })
 )
