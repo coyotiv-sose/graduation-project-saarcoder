@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
 
 require('dotenv').config()
 require('./database-connection')
@@ -32,10 +33,27 @@ app.use(
     cookie: {
       secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
       httpOnly: process.env.ENVIRONMENT === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
     },
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_CONNECTION_STRING,
+      stringify: false, //  makes it an object
+    }),
   })
 )
-
+// intercept any http request to the background
+app.use((req, res, next) => {
+  const numberOfVisits = req.session.numberOfVisits || 0
+  req.session.numberOfVisits = numberOfVisits + 1
+  req.session.history = req.session.history || []
+  req.session.history.push({
+    timestamp: new Date(),
+    url: req.url,
+    ip: req.ip,
+  })
+  console.log('session:', req.session)
+  next()
+})
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -47,6 +65,7 @@ app.use('/guests', guestsRouter)
 app.use('/users', usersRouter)
 app.use('/listings', listingsRouter)
 app.use('/offers', offersRouter)
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404))
