@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
+const passportLocalMongoose = require('passport-local-mongoose')
 const Listing = require('./listing')
 const Offer = require('./offer')
 
@@ -161,4 +162,6 @@ class User {
 userSchema.loadClass(User)
 
 userSchema.plugin(autopopulate)
+userSchema.plugin(passportLocalMongoose)
+
 module.exports = mongoose.model('User', userSchema)
