@@ -16,4 +16,5 @@ router.get('/db', async (req, res) => {
   await Offer.deleteMany()
   res.send('deleted')
 })
+
 module.exports = router

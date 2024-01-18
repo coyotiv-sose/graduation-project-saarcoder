@@ -3,8 +3,14 @@ const axios = require('axios').default
 axios.defaults.baseURL = 'http://localhost:3000'
 
 async function main() {
-  await axios.get('/db')
-  await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
+  /*   await axios.get('/db')
+   */
+  const newUser = await axios.post('/authentication/newUser', {
+    email: 'john@doe.com',
+    nickName: 'Johnny',
+    password: '1234',
+  })
+  /*   await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
   const pete = await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
   console.log('Pete:', pete.data)
 
@@ -145,6 +151,8 @@ async function main() {
   await axios
     .get(`/users/${merle.data._id}/offers/auction/Late Fall Auction`)
     .then(res => console.log('you have planned these offers to be included in this auction:', res.data))
+ */
+  console.log('new User is : ', newUser.data)
 }
 
 main().catch(err => console.log(err))

@@ -21,6 +21,7 @@ const guestsRouter = require('./routes/guests')
 const usersRouter = require('./routes/users')
 const listingsRouter = require('./routes/listings')
 const offersRouter = require('./routes/offers')
+const authRouter = require('./routes/authentication')
 
 const app = express()
 // view engine setup
@@ -67,7 +68,7 @@ app.use((req, res, next) => {
   console.log('session:', req.session)
   next()
 })
-app.use(passport.initialize())
+app.use(passport.session())
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -79,6 +80,7 @@ app.use('/guests', guestsRouter)
 app.use('/users', usersRouter)
 app.use('/listings', listingsRouter)
 app.use('/offers', offersRouter)
+app.use('/authentication', authRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
