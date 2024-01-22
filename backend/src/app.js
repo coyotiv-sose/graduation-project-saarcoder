@@ -8,7 +8,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const mongoose = require('mongoose')
 const passport = require('passport')
-const User = require('./models/user')
+const User = require('./models/authUser')
 
 require('dotenv').config()
 require('./database-connection')
@@ -29,11 +29,17 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
 let connectionPromise = mongoose.connection.asPromise().then(connection => (connectionPromise = connection.getClient()))
-app.use(cors())
+
+app.use(
+  cors({
+    origin: true, // TODO: update to frontend url
+    credentials: true,
+  })
+)
 app.use(
   session({
-    secret: 'secretPW', // process.env.SESSION_SECRET,
-    resave: false,
+    secret: process.env.SESSION_SECRET, // is required to enrcypt your session specifically to you
+    resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
     saveUninitialized: true,
     cookie: {
       secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
@@ -97,5 +103,16 @@ app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error')
 })
-console.log('오늘은 좋은 날입니다')
+app.createSocketServer = function (server) {
+  // casting the server object into socket.io object
+  const io = require('socket.io')(server)
+  console.log('Server side socket.io is running')
+  io.on('connection', socket => {
+    console.log('a user connected')
+    socket.on('disconnect', () => {
+      console.log('user disconnected')
+    })
+  })
+}
+console.log('app.js is running')
 module.exports = app

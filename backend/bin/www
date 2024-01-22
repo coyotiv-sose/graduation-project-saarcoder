@@ -20,7 +20,8 @@ app.set('port', port)
  */
 
 const server = http.createServer(app)
-
+// wraps around the normal server and provides addtional websocket functionality
+app.createSocketServer(server)
 /**
  * Listen on provided port, on all network interfaces.
  */
