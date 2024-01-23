@@ -14,7 +14,7 @@ export default {
   methods: {
     async login() {
       const newUser = await axios.post(
-        'http://localhost:3000/authentication/session',
+        import.meta.env.VITE_BACKEND_URL + '/authentication/session',
         {
           email: this.username,
           password: this.password

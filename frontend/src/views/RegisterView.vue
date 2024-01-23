@@ -12,7 +12,7 @@ export default {
   methods: {
     async register() {
       const newUser = await axios.post(
-        'http://localhost:3000/authentication/register',
+        import.meta.env.VITE_BACKEND_URL+'/authentication/register',
         {
           email: this.email,
           password: this.password

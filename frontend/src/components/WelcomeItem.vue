@@ -1,14 +1,14 @@
 <script setup>
 import axios from 'axios'
 async function addTrish() {
-  const { data: newUser } = await axios.post('http://localhost:3000/users', {
+  const { data: newUser } = await axios.post(import.meta.env.VITE_BACKEND_URL + '/users', {
     firstName: 'Trish',
     lastName: 'Hendricks'
   })
   console.log(newUser)
 }
 async function getUsers() {
-  const { data: allUsers } = await axios.get('http://localhost:3000/users')
+  const { data: allUsers } = await axios.get(import.meta.env.VITE_BACKEND_URL + '/users')
   console.log(allUsers)
 }
 addTrish()
