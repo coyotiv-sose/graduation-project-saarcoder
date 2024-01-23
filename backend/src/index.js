@@ -7,7 +7,7 @@ async function main() {
    */
   const newUser = await axios.post('/authentication/newUser', {
     email: 'john@doe.com',
-    nickName: 'Johnny',
+    nickName: 'JohnnyX',
     password: '1234',
   })
   /*   await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
