@@ -36,23 +36,22 @@ app.use(
     credentials: true,
   })
 )
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET, // is required to enrcypt your session specifically to you
-    resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
-    saveUninitialized: true,
-    cookie: {
-      secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
-      httpOnly: process.env.ENVIRONMENT === 'production',
-      maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
-    },
-    store: MongoStore.create({
-      clientPromise: connectionPromise,
-      // mongoUrl: process.env.MONGODB_CONNECTION_STRING,
-      stringify: false, //  transform cookie string to an object
-    }),
-  })
-)
+const sessionMiddleware = session({
+  secret: 'secret', // process.env.SESSION_SECRET, // is required to enrcypt your session specifically to you
+  resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
+  saveUninitialized: true,
+  cookie: {
+    secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
+    httpOnly: process.env.ENVIRONMENT === 'production',
+    maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
+  },
+  store: MongoStore.create({
+    clientPromise: connectionPromise,
+    // mongoUrl: process.env.MONGODB_CONNECTION_STRING,
+    stringify: false,
+  }),
+})
+app.use(sessionMiddleware)
 
 // use static authenticate method of model in LocalStrategy
 passport.use(User.createStrategy())
@@ -105,10 +104,32 @@ app.use((err, req, res) => {
 })
 app.createSocketServer = function (server) {
   // casting the server object into socket.io object
-  const io = require('socket.io')(server)
+  const io = require('socket.io')(server, {
+    cors: {
+      origin: true,
+      credentials: true,
+    },
+    /*     passport: {
+      secret: process.env.SESSION_SECRET,
+      store: MongoStore.create({
+        clientPromise: connectionPromise,
+        stringify: false,
+      }),
+    }, */
+  })
+  // app.use() only for socket.io
+  io.engine.use(sessionMiddleware)
+  io.engine.use(passport.session())
+
   console.log('Server side socket.io is running')
   io.on('connection', socket => {
     console.log('a user connected')
+
+    const socketSession = socket.request.session
+    console.log('socket io specific session', socketSession)
+
+    socket.emit('numberOfVisits', socketSession.numberOfVisits)
+
     socket.on('disconnect', () => {
       console.log('user disconnected')
     })
