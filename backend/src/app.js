@@ -28,6 +28,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
 const clientPromise = mongoose.connection.asPromise().then(connection => (connection = connection.getClient()))
+app.set('trust proxy', 1) // trust first proxy
 
 app.use(
   cors({
@@ -40,10 +41,10 @@ const sessionMiddleware = session({
   resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
   saveUninitialized: true,
   cookie: {
-    secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
-    httpOnly: process.env.ENVIRONMENT === 'production',
+    // httpOnly: process.env.ENVIRONMENT === 'production',
     maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
-    sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : 'lax',
+    sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : 'strict',
+    secure: 'false', // setting to true
   },
   store: MongoStore.create({
     clientPromise,
