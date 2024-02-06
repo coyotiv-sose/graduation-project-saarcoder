@@ -5,11 +5,11 @@ axios.defaults.baseURL = 'http://localhost:3000'
 async function main() {
   /*   await axios.get('/db')
    */
-  const newUser = await axios.post('/authentication/newUser', {
-    email: 'john@doe.com',
-    nickName: 'JohnnyX',
-    password: '1234',
-  })
+  /*   const newUser = await axios.post('/authentication/newUser', {
+      email: 'john@doe.com',
+      nickName: 'JohnnyX',
+      password: '1234',
+    }) */
   /*   await axios.post('/users', { firstName: 'Trish', lastName: 'Hendricks' })
   const pete = await axios.post('/users', { firstName: 'Pete', lastName: 'Bartholomew' })
   console.log('Pete:', pete.data)

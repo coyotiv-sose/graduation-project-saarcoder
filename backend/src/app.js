@@ -15,7 +15,6 @@ require('./database-connection')
 
 console.log(process.env.MONGODB_CONNECTION_STRING)
 
-const { constants } = require('crypto')
 const indexRouter = require('./routes/index')
 const guestsRouter = require('./routes/guests')
 const usersRouter = require('./routes/users')
@@ -28,7 +27,7 @@ const app = express()
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-let connectionPromise = mongoose.connection.asPromise().then(connection => (connectionPromise = connection.getClient()))
+const clientPromise = mongoose.connection.asPromise().then(connection => (connection = connection.getClient()))
 
 app.use(
   cors({
@@ -44,9 +43,10 @@ const sessionMiddleware = session({
     secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
     httpOnly: process.env.ENVIRONMENT === 'production',
     maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
+    // sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : 'lax',
   },
   store: MongoStore.create({
-    clientPromise: connectionPromise,
+    clientPromise,
     // mongoUrl: process.env.MONGODB_CONNECTION_STRING,
     stringify: false,
   }),
@@ -102,7 +102,7 @@ app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error')
 })
-app.createSocketServer = function (server) {
+app.createSocketServer = server => {
   // casting the server object into socket.io object
   const io = require('socket.io')(server, {
     cors: {
