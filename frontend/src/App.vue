@@ -1,6 +1,25 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { authenticationStore } from './stores/authentication'
+import { mapActions, mapState } from 'pinia'
+export default {
+  name: 'App',
+  components: {
+    HelloWorld,
+    RouterLink,
+    RouterView
+  },
+  computed: {
+    ...mapState(authenticationStore, ['user'])
+  },
+  methods: {
+    ...mapActions(authenticationStore, ['fetchUser'])
+  },
+  async mounted() {
+    await this.fetchUser()
+  }
+}
 </script>
 
 <template>
@@ -8,7 +27,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="Hi Alex!" />
+      <HelloWorld :msg="user" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>

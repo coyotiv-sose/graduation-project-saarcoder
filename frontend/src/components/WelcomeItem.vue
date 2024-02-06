@@ -11,7 +11,7 @@ async function getUsers() {
   const { data: allUsers } = await axios.get(import.meta.env.VITE_BACKEND_URL + '/users')
   console.log(allUsers)
 }
-addTrish()
+// addTrish()
 getUsers()
 </script>
 <template>
