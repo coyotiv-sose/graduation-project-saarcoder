@@ -43,7 +43,7 @@ const sessionMiddleware = session({
     secure: process.env.ENVIRONMENT === 'production', // setting to true for production environment
     httpOnly: process.env.ENVIRONMENT === 'production',
     maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
-    // sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : 'lax',
+    sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : 'lax',
   },
   store: MongoStore.create({
     clientPromise,
