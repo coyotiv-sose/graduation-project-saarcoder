@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios'
-import { authenticationStore } from '../stores/authentication'
+import { authenticationStore } from '../stores/authenticationStore'
 import { mapActions, mapState } from 'pinia'
 
 export default {
@@ -45,4 +45,5 @@ form {
   height: 50vh;
 }
 </style>
+../stores/authenticationStore
 ../stores/authenticationStore
