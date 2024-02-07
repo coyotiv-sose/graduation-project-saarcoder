@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+
 export default {
   name: 'LoginView',
   components: {},
@@ -26,6 +27,7 @@ export default {
       if (newUser) {
         this.user = newUser.data
         this.status = 'success'
+        this.$router.push('/about')
       } else {
         this.user = {}
         this.status = 'failed'
