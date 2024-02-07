@@ -10,8 +10,8 @@ export const authenticationStore = defineStore('authentication', {
   }),
   actions: {
     async fetchUser() {
-      this.user = (await axios.get('/authentication/session')).data
-      console.log('User:', await axios.get('/authentication/session'))
+      this.user = (await axios.get('/authentication/session'))
+      console.log('User:', this.user)
     },
     async login(username, password) {
       this.user = await axios.post(
