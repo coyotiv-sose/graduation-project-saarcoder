@@ -1,6 +1,5 @@
 <script>
-import axios from 'axios'
-import { authenticationStore } from '../stores/authenticationStore'
+import { useAuthenticationStore } from '../stores/authenticationStore'
 import { mapActions, mapState } from 'pinia'
 
 export default {
@@ -14,13 +13,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(authenticationStore, ['user']),
+    ...mapState(useAuthenticationStore, ['user']),
   },
   methods: {
-    ...mapActions(authenticationStore, ['login']),
+    ...mapActions(useAuthenticationStore, ['login']),
     doLogin() {
       this.login(this.username, this.password)
-      this.$router.push('/about')
+      this.$router.push('/account')
     }
   }
 }
