@@ -14,7 +14,6 @@ router.post('/newUser', async (req, res) => {
   })
 })
 router.post('/session', passport.authenticate('local', { failWithError: true }), (req, res) => {
-  console.log('User is authenticated', req.session)
   res.send(req.user)
 })
 router.get('/session', async (req, res) => {

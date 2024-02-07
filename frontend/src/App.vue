@@ -32,8 +32,7 @@ export default {
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="Hi there"/>
-      <p>{{ user?.data?.nickName }}</p>
+      <h2>Hi {{ user?.data?.nickName }}!</h2>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink v-if="user" to="/account">Your Account</RouterLink>
