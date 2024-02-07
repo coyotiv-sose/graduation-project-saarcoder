@@ -1,5 +1,7 @@
 <script>
 import axios from 'axios'
+import { authenticationStore } from '../stores/authentication'
+import { mapActions, mapState } from 'pinia'
 
 export default {
   name: 'LoginView',
@@ -8,31 +10,17 @@ export default {
     return {
       username: '',
       password: '',
-      status: '',
-      user: {}
+      status: ''
     }
   },
+  computed: {
+    ...mapState(authenticationStore, ['user']),
+  },
   methods: {
-    async login() {
-      const newUser = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + '/authentication/session',
-        {
-          email: this.username,
-          password: this.password
-        },
-        {
-          withCredentials: true
-        }
-      )
-      if (newUser) {
-        this.user = newUser.data
-        this.status = 'success'
-        this.$router.push('/about')
-      } else {
-        this.user = {}
-        this.status = 'failed'
-      }
-      console.log(newUser.data)
+    ...mapActions(authenticationStore, ['login']),
+    doLogin() {
+      this.login()
+      this.$router.push('/about')
     }
   }
 }
@@ -42,7 +30,7 @@ export default {
   <form v-on:submit.prevent>
     <input type="text" name="username" placeholder="Username" v-model="username" required />
     <input type="password" name="password" placeholder="Password" v-model="password" required />
-    <button type="submit" @click="login">Login</button>
+    <button type="submit" @click="doLogin">Login</button>
     <label>{{ status }}</label>
     <label v-if="user">Are you allowed to see this?</label>
   </form>
