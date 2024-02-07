@@ -36,20 +36,19 @@ app.use(
   })
 )
 
-// app.set('trust proxy', 1)
+app.set('trust proxy', 1) // trust first proxy
 const sessionMiddleware = session({
-  secret: 'SuperSecureSecretNobodyKnows', // process.env.SESSION_SECRET, // is required to enrcypt your session specifically to you
+  secret: 'SuperSecureSecretNobodyKnows', // is required to enrcypt your session specifically to you like
   resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
   saveUninitialized: true,
   cookie: {
+    secure: process.env.ENVIRONMENT === 'production', // TODO: set to true when using https
     // httpOnly: process.env.ENVIRONMENT === 'production',
     maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
     sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : 'strict',
-    secure: 'false', // setting to true
   },
   store: MongoStore.create({
     clientPromise,
-    // mongoUrl: process.env.MONGODB_CONNECTION_STRING,
     stringify: false,
   }),
 })
