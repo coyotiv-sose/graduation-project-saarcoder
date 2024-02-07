@@ -13,15 +13,14 @@ export const authenticationStore = defineStore('authentication', {
       this.user = (await axios.get('/authentication/session')).data
       console.log('User:', await axios.get('/authentication/session'))
     },
-    async login() {
+    async login(username, password) {
       this.user = await axios.post(
         '/authentication/session',
         {
-          email: this.username,
-          password: this.password
+          email: username,
+          password: password
         }
       )
-      console.log(newUser.data)
     }
 
   }

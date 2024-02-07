@@ -19,7 +19,7 @@ export default {
   methods: {
     ...mapActions(authenticationStore, ['login']),
     doLogin() {
-      this.login()
+      this.login(this.username, this.password)
       this.$router.push('/about')
     }
   }
@@ -45,3 +45,4 @@ form {
   height: 50vh;
 }
 </style>
+../stores/authenticationStore

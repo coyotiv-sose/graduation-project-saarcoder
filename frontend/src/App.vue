@@ -27,8 +27,8 @@ export default {
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld />
-      <p>{{ user }}</p>
+      <HelloWorld msg="Hi there"/>
+      <p>{{ user?.data?.nickName }}</p>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -102,3 +102,4 @@ nav a:first-of-type {
   }
 }
 </style>
+./stores/authenticationStore
