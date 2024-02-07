@@ -6,7 +6,7 @@ const AuthUser = require('../models/authUser')
 
 router.post('/newUser', async (req, res) => {
   const { email, nickName, password } = req.body
-  await AuthUser.register({ email, nickName }, password, (err, user) => {
+  AuthUser.register({ email, nickName }, password, (err, user) => {
     if (err) {
       console.log('Error on user auth creation', err)
     }
@@ -14,10 +14,11 @@ router.post('/newUser', async (req, res) => {
   })
 })
 router.post('/session', passport.authenticate('local', { failWithError: true }), (req, res) => {
-  console.log('User is authenticated')
+  console.log('User is authenticated', req.session)
   res.send(req.user)
 })
 router.get('/session', async (req, res) => {
+  console.log('User get req', req.session)
   res.send(req.user)
 })
 module.exports = router

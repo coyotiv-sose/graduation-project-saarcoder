@@ -36,25 +36,24 @@ app.use(
   })
 )
 
-app.set('trust proxy', 1) // trust first proxy
-app.use(
-  session({
-    secret: 'SuperSecureSecretNobodyKnows', // is required to enrcypt your session specifically to you like
-    resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
-    saveUninitialized: true,
-    cookie: {
-      secure: process.env.ENVIRONMENT === 'production', // TODO: set to true when using https
-      // httpOnly: process.env.ENVIRONMENT === 'production',
-      maxAge: 1000 * 60 * 60 * 24 * 7, // how long the cookie is valid in ms
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-    },
-    store: MongoStore.create({
-      clientPromise,
-
-      stringify: false,
-    }),
-  })
-)
+// app.set('trust proxy', 1)
+const sessionMiddleware = session({
+  secret: 'SuperSecureSecretNobodyKnows', // process.env.SESSION_SECRET, // is required to enrcypt your session specifically to you
+  resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
+  saveUninitialized: true,
+  cookie: {
+    // httpOnly: process.env.ENVIRONMENT === 'production',
+    maxAge: 1000 * 60 * 60 * 24 * 7 * 3, // 3 weeks
+    sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : 'strict',
+    secure: 'false', // setting to true
+  },
+  store: MongoStore.create({
+    clientPromise,
+    // mongoUrl: process.env.MONGODB_CONNECTION_STRING,
+    stringify: false,
+  }),
+})
+app.use(sessionMiddleware)
 
 // use static authenticate method of model in LocalStrategy
 passport.use(User.createStrategy())
@@ -121,24 +120,7 @@ app.createSocketServer = server => {
     }, */
   })
   // app.use() only for socket.io
-  io.engine.use(
-    session({
-      secret: 'SuperSecureSecretNobodyKnows', // is required to enrcypt your session specifically to you like
-      resave: false, // Forces the session to be saved back to the session store, even if the session was never modified
-      saveUninitialized: true,
-      cookie: {
-        secure: process.env.ENVIRONMENT === 'production', // TODO: set to true when using https
-        // httpOnly: process.env.ENVIRONMENT === 'production',
-        maxAge: 1000 * 60 * 60 * 24 * 7, // how long the cookie is valid in ms
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-      },
-      store: MongoStore.create({
-        clientPromise,
-
-        stringify: false,
-      }),
-    })
-  )
+  io.engine.use(sessionMiddleware)
   io.engine.use(passport.session())
 
   console.log('Server side socket.io is running')

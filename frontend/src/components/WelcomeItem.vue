@@ -12,7 +12,7 @@ async function getUsers() {
   console.log(allUsers)
 }
 // addTrish()
-getUsers()
+//getUsers()
 </script>
 <template>
   <div class="item">
