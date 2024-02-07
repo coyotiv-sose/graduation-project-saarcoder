@@ -21,4 +21,9 @@ router.get('/session', async (req, res) => {
   console.log('User get req', req.session)
   res.send(req.user)
 })
+router.delete('/session', (req, res) => {
+  req.logout(() => {
+    res.sendStatus(200)
+  })
+})
 module.exports = router

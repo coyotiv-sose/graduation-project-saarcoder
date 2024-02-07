@@ -1,8 +1,9 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import { authenticationStore } from './stores/authenticationStore'
+import { useAuthenticationStore } from './stores/authenticationStore'
 import { mapActions, mapState } from 'pinia'
+
 export default {
   name: 'App',
   components: {
@@ -11,10 +12,14 @@ export default {
     RouterView
   },
   computed: {
-    ...mapState(authenticationStore, ['user'])
+    ...mapState(useAuthenticationStore, ['user'])
   },
   methods: {
-    ...mapActions(authenticationStore, ['fetchUser'])
+    ...mapActions(useAuthenticationStore, ['fetchUser','logout']),
+    async logoutRedirect() {
+      await this.logout()
+      this.$router.push('/')
+    },
   },
   async mounted() {
     await this.fetchUser()
@@ -31,7 +36,11 @@ export default {
       <p>{{ user?.data?.nickName }}</p>
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink v-if="user" to="/account">Your Account</RouterLink>
+        <span v-if="user" @click="logoutRedirect">Logout</span>
+        <RouterLink v-if="!user" to="/login">Already a user? Please login</RouterLink>
+        <RouterLink v-if="!user" to="/register">or register first</RouterLink>
+
       </nav>
     </div>
   </header>
