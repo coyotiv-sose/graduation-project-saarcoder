@@ -4,7 +4,6 @@ import { useAuthenticationStore } from '@/stores/authentication'
 import { mapActions, mapState } from 'pinia'
 
 export default {
-  name: 'App',
   components: {
     RouterLink,
     RouterView

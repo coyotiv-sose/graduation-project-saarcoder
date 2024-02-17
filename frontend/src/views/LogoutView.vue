@@ -14,7 +14,6 @@ export default {
 </script>
 <template>
   <div>
-    <a @click.prevent="logoutRedirect" href="logout">Logout</a>
+  <RouterLink @click="logoutRedirect" to="/logout">Logout</RouterLink>
   </div>
 </template>
-<style scoped></style>

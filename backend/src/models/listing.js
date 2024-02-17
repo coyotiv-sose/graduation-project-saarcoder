@@ -1,6 +1,21 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 
+const amenities = [
+  'cribOrCotAvailable',
+  'kitchen',
+  'kettle',
+  'fridge',
+  'freezer',
+  'stove',
+  'oven',
+  'highChairAvailable',
+  'washingMachine',
+  'linen',
+  'underfloorHeating',
+  'laminateFlooring',
+  'warmWaterAvailable',
+]
 const listingSchema = new mongoose.Schema({
   owner: String,
   name: String,
@@ -10,19 +25,7 @@ const listingSchema = new mongoose.Schema({
   numOfRooms: Number,
   numOfBedsInTotal: Number,
   numOfDoubleBeds: Number,
-  cribOrCotAvailable: Boolean,
-  kitchen: Boolean,
-  kettle: Boolean,
-  fridge: Boolean,
-  freezer: Boolean,
-  stove: Boolean,
-  oven: Boolean,
-  highChairAvailable: Boolean,
-  washingMachine: Boolean,
-  linen: Boolean,
-  underfloorHeating: Boolean,
-  laminateFlooring: Boolean,
-  warmWaterAvailable: Boolean,
+  amenities: { type: [String], enum: amenities },
 })
 class Listing {
   /*   _destinationType = ['mountains', 'beach', 'city']

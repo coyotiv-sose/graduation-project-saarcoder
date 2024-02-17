@@ -4,10 +4,11 @@ import { io } from 'socket-io-client'
 export const socketStore = defineStore('socket', {
   state: () => ({
     connected: false,
+    time: ''
   }),
   actions: {
     connect() {
-      const socket = io(import.meta.env.VITE_BACKEND_URL)
+      const socket = io(import.meta.env.VITE_BACKEND_URL, { withCredentials: true })
       console.log('connecting socket')
 
       socket.on('connect', () => {

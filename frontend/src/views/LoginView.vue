@@ -3,13 +3,10 @@ import { useAuthenticationStore } from '../stores/authentication'
 import { mapActions, mapState } from 'pinia'
 
 export default {
-  name: 'LoginView',
-  components: {},
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
-      status: ''
     }
   },
   computed: {
@@ -17,33 +14,46 @@ export default {
   },
   methods: {
     ...mapActions(useAuthenticationStore, ['login']),
-    doLogin() {
-      this.login(this.username, this.password)
+    async loginAction() {
+      await this.login(this.email, this.password)
       this.$router.push('/account')
-    }
+    },
   }
 }
 </script>
 
 <template>
+  <div class="center">
+    Please enter your username and password
+  </div>
   <form v-on:submit.prevent>
-    <input type="text" name="username" placeholder="Username" v-model="username" required />
-    <input type="password" name="password" placeholder="Password" v-model="password" required />
-    <button type="submit" @click="doLogin">Login</button>
-    <label>{{ status }}</label>
-    <label v-if="user">Are you allowed to see this?</label>
+    <input type="text" placeholder="E-Mail" v-model="email" required />
+    <input type="password" placeholder="Password" v-model="password" required />
+    <button type="submit" class="btn btn-success btn-sm" @click="loginAction()">Login</button>
+    <span>Not a user yet? </span>
+    <RouterLink class="routerLink" to="/register">Register</RouterLink>
   </form>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+.center {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
+  height: 40vh;
+  input {
+    margin-bottom: .25rem;
+  }
+  button {
+    margin: .5rem 0;
+  }
 }
 </style>
-../stores/authenticationStore
-../stores/authenticationStore
-../stores/authentication
