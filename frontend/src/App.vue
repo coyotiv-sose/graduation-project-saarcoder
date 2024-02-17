@@ -1,13 +1,11 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import { useAuthenticationStore } from './stores/authenticationStore'
+import { useAuthenticationStore } from '@/stores/authentication'
 import { mapActions, mapState } from 'pinia'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
     RouterLink,
     RouterView
   },
@@ -15,11 +13,7 @@ export default {
     ...mapState(useAuthenticationStore, ['user'])
   },
   methods: {
-    ...mapActions(useAuthenticationStore, ['fetchUser','logout']),
-    async logoutRedirect() {
-      await this.logout()
-      this.$router.push('/')
-    },
+    ...mapActions(useAuthenticationStore, ['fetchUser']),
   },
   async mounted() {
     await this.fetchUser()
@@ -29,22 +23,19 @@ export default {
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <h2>Hi {{ user?.data?.nickName }}!</h2>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink v-if="user" to="/account">Your Account</RouterLink>
-        <span v-if="user" @click="logoutRedirect">Logout</span>
-        <RouterLink v-if="!user" to="/login">Already a user? Please login</RouterLink>
-        <RouterLink v-if="!user" to="/register">or register first</RouterLink>
-
+        <RouterLink v-if="!user" to="/login">Already a user?</RouterLink>
+        <RouterLink v-if="!user" to="/register"> Register</RouterLink>
+        <RouterLink v-if="user" to="/logout">Logout</RouterLink>
       </nav>
     </div>
   </header>
 
   <RouterView />
+
 </template>
 
 <style scoped>
@@ -52,19 +43,12 @@ header {
   line-height: 1.5;
   max-height: 100vh;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
 nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
 }
-
 nav a.router-link-exact-active {
   color: var(--color-text);
 }
@@ -83,15 +67,12 @@ nav a:first-of-type {
   border: 0;
 }
 
+
 @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
   }
 
   header .wrapper {
@@ -110,5 +91,4 @@ nav a:first-of-type {
   }
 }
 </style>
-./stores/authenticationStore
-./stores/authenticationStore
+./stores/authentication
