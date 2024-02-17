@@ -1,5 +1,5 @@
 <script>
-import { useAuthenticationStore } from '../stores/authenticationStore'
+import { useAuthenticationStore } from '../stores/authentication'
 import { mapActions, mapState } from 'pinia'
 
 export default {
@@ -46,3 +46,4 @@ form {
 </style>
 ../stores/authenticationStore
 ../stores/authenticationStore
+../stores/authentication
