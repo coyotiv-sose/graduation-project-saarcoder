@@ -10,14 +10,14 @@ export const useAuthenticationStore = defineStore('authentication', {
   }),
   actions: {
     async fetchUser() {
-      this.user = (await axios.get('/authentication/session'))
+      this.user = await axios.get('/authentication/session')
     },
-    async login(username, password) {
+    async login(email, password) {
       this.user = await axios.post(
         '/authentication/session',
         {
-          email: username,
-          password: password
+          email,
+          password
         }
       )
     },
@@ -26,7 +26,7 @@ export const useAuthenticationStore = defineStore('authentication', {
       this.user = null
     },
     async register(email, nickName, password) {
-      const newUser = await axios.post('/authentication/newUser',
+      await axios.post('/authentication/newUser',
         {
           email: email,
           password: password,
