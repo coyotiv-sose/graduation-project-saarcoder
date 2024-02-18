@@ -3,18 +3,31 @@ const autopopulate = require('mongoose-autopopulate')
 
 const amenities = [
   'cribOrCotAvailable',
+  'bedLinen',
+  'tv',
+  'underfloorHeating',
+  'laminateFlooring',
+  'stove',
   'kitchen',
+  'dishwasher',
+  'microwave',
+  'coffeeMachine',
+  'toaster',
   'kettle',
   'fridge',
   'freezer',
-  'stove',
   'oven',
   'highChairAvailable',
   'washingMachine',
-  'linen',
-  'underfloorHeating',
-  'laminateFlooring',
+  'dryer',
+  'iron',
+  'shower',
+  'bathtub',
+  'hairdryer',
+  'towels',
   'warmWaterAvailable',
+  'wifi',
+  'parking',
 ]
 const listingSchema = new mongoose.Schema({
   owner: String,
@@ -25,7 +38,10 @@ const listingSchema = new mongoose.Schema({
   numOfRooms: Number,
   numOfBedsInTotal: Number,
   numOfDoubleBeds: Number,
-  amenities: { type: [String], enum: amenities },
+  amenities: {
+    type: [String],
+    enum: amenities,
+  },
 })
 class Listing {
   /*   _destinationType = ['mountains', 'beach', 'city']
