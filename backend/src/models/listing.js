@@ -42,6 +42,7 @@ const listingSchema = new mongoose.Schema({
   amenities: {
     type: [String],
     enum: amenities,
+    required: false,
   },
 })
 class Listing {

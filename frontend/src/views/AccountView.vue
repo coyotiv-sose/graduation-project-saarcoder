@@ -54,9 +54,9 @@ export default {
     ...mapActions(useListingStore, ['fetchListings', 'createListing', 'updateListingName', 'updateListingOwner', 'updateRemainingListingProps','deleteListing']),
 
     async addListing(){
-      const userId = this.user._id
-      await this.createListing(this.newListingBasics[0], userId)
-      await this.updateRemainingListingProps(this.newListingAmenities[0])
+      const ownerId = this.user.data._id
+      await this.createListing(this.newListingBasics[0], ownerId)
+      //await this.updateRemainingListingProps(this.newListingAmenities[0])
     },
     saveAmenities(){
       this.newListingAmenities = []
