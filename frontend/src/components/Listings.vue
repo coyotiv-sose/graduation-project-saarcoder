@@ -1,11 +1,11 @@
 <script>
-import { useAuthenticationStore } from '../stores/authentication'
-import { mapState } from 'pinia'
+import { useListingStore } from '@/stores/listing'
+import { mapState, mapActions } from 'pinia'
 export default {
   data() {
     return {
-      header: 'Your listings',
-      listings: [
+      header: 'Your local listings:',
+      staticListings: [
         {
           id: 1,
           title: 'Cozy apartment in the city center',
@@ -19,25 +19,25 @@ export default {
           description: 'This is a spacious house with a garden. It is perfect for families and has a great view.',
           price: 200,
           location: 'Suburbs',
-        },
-        {
-          id: 3,
-          title: 'Modern apartment with a view',
-          description: 'This is a modern apartment with a great view. It is close to all amenities and has a great view.',
-          price: 150,
-          location: 'City center',
-        },
+        }
       ],
     }
   },
   computed: {
-    ...mapState(useAuthenticationStore, ['user']),
+    ...mapState(useListingStore, ['listings']),
+  },
+  methods: {
+    ...mapActions(useListingStore, ['fetchListings', 'createListing', 'updateListingName', 'updateListingOwner', 'updateRemainingListingProps','deleteListing']),
   },
 }
 </script>
 <template>
     <h2>{{ header }}</h2>
     <ul>
-      <li v-for="listing in listings" :key="listing.id">{{ listing.title }} in {{ listing.location }}, price/night: {{ listing.price }} €</li>
+      <li v-for="single in staticListings" :key="single.id">{{ single.title }} in {{ single.location }}, price/night: {{ single.price }} €</li>
+    </ul>
+    <h2>Your global listings:</h2>
+    <ul>
+      <li v-for="listing in listings" :key="listing._id">{{ listing.title }} in {{ listing.location }}, price/night: {{ listing.price }} €</li>
     </ul>
 </template>

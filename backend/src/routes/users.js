@@ -25,7 +25,7 @@ router.post('/listings', async (req, res) => {
   console.log('request', req.body, 'uid from request body:', req.body.ownerId)
   console.log('user:', user)
 
-  const listing = await user.createListing(name, country, region, place, numOfRooms, numOfBedsInTotal)
+  const listing = await user.createListing({ name, country, region, place, numOfRooms, numOfBedsInTotal })
 
   res.send(listing)
 })

@@ -1,7 +1,8 @@
 <script>
 import Listings from '@/components/Listings.vue'
-import { useAuthenticationStore } from '../stores/authentication'
-import { mapState } from 'pinia'
+import { useListingStore } from '../stores/listing'
+import { useAuthenticationStore } from '@/stores/authentication'
+import { mapState, mapActions } from 'pinia'
 export default {
   components: {
     Listings
@@ -41,22 +42,24 @@ export default {
       iron: false,
       wifi: false,
       parking: false,
-      all: []
+      newListingBasics: [],
+      newListingAmenities: [],
     }
   },
   computed: {
+    ...mapState(useListingStore, ['listing']),
     ...mapState(useAuthenticationStore, ['user']),
   },
   methods: {
-    saveItem() {
-      this.all.push({
-        name: this.name,
-        country: this.country,
-        region: this.region,
-        place: this.place,
-        numOfRooms: this.numOfRooms,
-        numOfBedsInTotal: this.numOfBedsInTotal,
-        numOfDoubleBeds: this.numOfDoubleBeds,
+    ...mapActions(useListingStore, ['fetchListings', 'createListing', 'updateListingName', 'updateListingOwner', 'updateRemainingListingProps','deleteListing']),
+
+    async addListing(){
+      await this.createListing(this.newListingBasics[0])
+      await this.updateRemainingListingProps(this.newListingAmenities[0])
+    },
+    saveAmenities(){
+      this.newListingAmenities = []
+      this.newListingAmenities.push({
         cribOrCotAvailable: this.cribOrCotAvailable,
         tv: this.tv,
         underfloorHeating: this.underfloorHeating,
@@ -84,8 +87,19 @@ export default {
         wifi: this.wifi,
         parking: this.parking
       })
-
-    }
+    },
+    saveBasics(){
+      this.newListingBasics = []
+      this.newListingBasics.push({
+        name: this.name,
+        country: this.country,
+        region: this.region,
+        place: this.place,
+        numOfRooms: this.numOfRooms,
+        numOfBedsInTotal: this.numOfBedsInTotal,
+        numOfDoubleBeds: this.numOfDoubleBeds,
+      })
+    },
   }
 }
 </script>
@@ -95,15 +109,17 @@ export default {
     <Listings />
 
     <!-- Add listing -->
-    <h2>Add a listing</h2>
     <div class="add-item-form">
-      <input v-model.lazy="name" type="text" placeholder="Name" required />
-      <input v-model.lazy="country" type="text" placeholder="Country" required />
-      <input v-model.lazy="region" type="text" placeholder="Region" required />
-      <input v-model.lazy="place" type="text" placeholder="Place" required />
+      <h2>Add a listing</h2>
+      <input @keyup.enter="saveItem" v-model.lazy="name" type="text" placeholder="Name" required />
+      <input @keyup.enter="saveItem" v-model.lazy="country" type="text" placeholder="Country" required />
+      <input @keyup.enter="saveItem" v-model.lazy="region" type="text" placeholder="Region" required />
+      <input @keyup.enter="saveItem" v-model.lazy="place" type="text" placeholder="Place" required />
       <label><input v-model.number="numOfRooms" type="number" min="1" required />Room(s)</label>
       <label><input v-model.number="numOfBedsInTotal" type="number" min="1" required />Bed(s)</label>
       <label><input v-model.number="numOfDoubleBeds" type="number" required />Double bed(s)</label>
+      <button @click="saveBasics" class="btn btn-success btn-sm">Add basic listing data</button>
+
       <div class="amenities">
       <h3>Choose your available amenities from list</h3>
       <label><input type="checkbox" v-model="cribOrCotAvailable" value="crib or cot">Crib or Cot</label>
@@ -134,11 +150,10 @@ export default {
       <label><input type="checkbox" v-model="parking" value="parking">Parking</label>
       </div>
       <br>
-      <button @click="saveItem" class="btn btn-success btn-sm">Add a listing</button>
+      <button @click="saveAmenities" class="btn btn-success btn-sm">Add your amenities</button>
+      <button @click="addListing" class="btn btn-success btn-sm ms-2">Add listing</button>
     </div>
-    <div>
-      {{ all }}
-    </div>
+
 </template>
 
 <style>

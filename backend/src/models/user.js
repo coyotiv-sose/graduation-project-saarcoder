@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
 })
 
 class User {
-  async createListing(name, country, region, place, numOfRooms, numOfBedsInTotal) {
+  async createListing(name, country, region, place, numOfRooms, numOfBedsInTotal, numOfDoubleBeds) {
     // using mongoose create method instead of constructor
     const listing = await Listing.create({
       owner: this.lastName,
@@ -22,6 +22,7 @@ class User {
       place,
       numOfRooms,
       numOfBedsInTotal,
+      numOfDoubleBeds,
     })
     // this is just pushing the objectId of the listing, not the properties of the listing
     this.listings.push(listing)
@@ -45,7 +46,6 @@ class User {
 
   async updateRemainingListingProps(
     listingName,
-    numOfDoubleBeds,
     cribOrCotAvailable,
     kitchen,
     kettle,
@@ -58,11 +58,24 @@ class User {
     linen,
     underfloorHeating,
     laminateFlooring,
-    warmWaterAvailable
+    warmWaterAvailable,
+    tv,
+    dishwasher,
+    microwave,
+    coffeeMachine,
+    toaster,
+    dryer,
+    shower,
+    bathtub,
+    hairdryer,
+    towels,
+    bedLinen,
+    iron,
+    wifi,
+    parking
   ) {
     const listingIndex = this.listings.findIndex(el => el.name === listingName)
     this.listings[listingIndex].addRemainingProps({
-      numOfDoubleBeds,
       cribOrCotAvailable,
       kitchen,
       kettle,
@@ -76,6 +89,20 @@ class User {
       underfloorHeating,
       laminateFlooring,
       warmWaterAvailable,
+      tv,
+      dishwasher,
+      microwave,
+      coffeeMachine,
+      toaster,
+      dryer,
+      shower,
+      bathtub,
+      hairdryer,
+      towels,
+      bedLinen,
+      iron,
+      wifi,
+      parking,
     })
   }
 

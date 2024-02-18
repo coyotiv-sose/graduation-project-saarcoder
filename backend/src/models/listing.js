@@ -73,7 +73,6 @@ class Listing {
   } */
 
   async addRemainingProps({
-    numOfDoubleBeds,
     cribOrCotAvailable,
     kitchen,
     kettle,
@@ -87,8 +86,21 @@ class Listing {
     underfloorHeating,
     laminateFlooring,
     warmWaterAvailable,
+    tv,
+    dishwasher,
+    microwave,
+    coffeeMachine,
+    toaster,
+    dryer,
+    shower,
+    bathtub,
+    hairdryer,
+    towels,
+    bedLinen,
+    iron,
+    wifi,
+    parking,
   }) {
-    this.numOfDoubleBeds = numOfDoubleBeds
     this.cribOrCotAvailable = cribOrCotAvailable
     this.kitchen = kitchen
     this.kettle = kettle
@@ -102,6 +114,20 @@ class Listing {
     this.underfloorHeating = underfloorHeating
     this.laminateFlooring = laminateFlooring
     this.warmWaterAvailable = warmWaterAvailable
+    this.tv = tv
+    this.dishwasher = dishwasher
+    this.microwave = microwave
+    this.coffeeMachine = coffeeMachine
+    this.toaster = toaster
+    this.dryer = dryer
+    this.shower = shower
+    this.bathtub = bathtub
+    this.hairdryer = hairdryer
+    this.towels = towels
+    this.bedLinen = bedLinen
+    this.iron = iron
+    this.wifi = wifi
+    this.parking = parking
     return this
   }
 }
