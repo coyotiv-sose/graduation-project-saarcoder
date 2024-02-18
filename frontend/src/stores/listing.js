@@ -16,8 +16,8 @@ export const useListingStore = defineStore('listing', {
     async fetchListing(listingId) {
       this.listing = await axios.get(`/users/listings/${listingId}`)
     },
-    async createListing({ name, country, region, place, numOfRooms, numOfBedsInTotal, numOfDoubleBeds }) {
-      this.listing = await axios.post('/users/listings', {
+    async createListing({ name, country, region, place, numOfRooms, numOfBedsInTotal, numOfDoubleBeds }, ownerId) {
+      this.listing = await axios.post('/listings', {
         name,
         country,
         region,
@@ -25,6 +25,7 @@ export const useListingStore = defineStore('listing', {
         numOfRooms,
         numOfBedsInTotal,
         numOfDoubleBeds,
+        ownerId
       })
     },
     async updateListingName(name, newName) {

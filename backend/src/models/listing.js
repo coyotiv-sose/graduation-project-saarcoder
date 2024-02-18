@@ -35,6 +35,7 @@ const listingSchema = new mongoose.Schema({
   country: String,
   region: String,
   place: String,
+  type: String,
   numOfRooms: Number,
   numOfBedsInTotal: Number,
   numOfDoubleBeds: Number,
@@ -44,34 +45,6 @@ const listingSchema = new mongoose.Schema({
   },
 })
 class Listing {
-  /*   _destinationType = ['mountains', 'beach', 'city']
-
-    #postCode
-
-    #street
-
-    #houseNumber */
-
-  /*   get retrievePostCode() {
-    return this.#postCode
-  }
-
-  get retrieveStreetName() {
-    return this.#street
-  }
-
-  get retrieveHouseNumber() {
-    return this.#houseNumber
-  }
-
-  get destinationType() {
-    return this.destinationType
-  }
-
-  set destinationType(type) {
-    this.destinationType = type
-  } */
-
   async addRemainingProps({
     cribOrCotAvailable,
     kitchen,
