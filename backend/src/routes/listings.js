@@ -6,7 +6,6 @@ const Listing = require('../models/listing')
 // create a new listing
 router.post('/', async (req, res) => {
   try {
-    console.log('route was requested')
     const { name, country, region, place, type, numOfRooms, numOfBedsInTotal, ownerId } = req.body
 
     const listing = await Listing.create({
