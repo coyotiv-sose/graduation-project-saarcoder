@@ -2,6 +2,10 @@
 import { useListingStore } from '@/stores/listing'
 import { mapState, mapActions } from 'pinia'
 export default {
+  async created() {
+    const store = useListingStore()
+    await store.fetchListings()
+  },
   data() {
     return {
       header: 'Your local listings:',
@@ -38,6 +42,6 @@ export default {
     </ul>
     <h2>Your global listings:</h2>
     <ul>
-      <li v-for="listing in listings" :key="listing._id">{{ listing.title }} in {{ listing.location }}, price/night: {{ listing.price }} €</li>
+      <li v-for="listing in listings" :key="listing._id">{{ listing.name }} in {{ listing.place }}, rooms: {{ listing.numOfRooms }}</li>
     </ul>
 </template>

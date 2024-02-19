@@ -11,10 +11,11 @@ export const useListingStore = defineStore('listing', {
   }),
   actions: {
     async fetchListings() {
-      this.listings = await axios.get('/users/listings')
+      const response = await axios.get('/listings')
+      this.listings = response.data
     },
     async fetchListing(listingId) {
-      this.listing = await axios.get(`/users/listings/${listingId}`)
+      this.listing = await axios.get(`/listings/${listingId}`)
     },
     async createListing({ name, country, region, place, numOfRooms, numOfBedsInTotal, numOfDoubleBeds }, ownerId) {
       this.listing = await axios.post('/listings', {
@@ -30,12 +31,12 @@ export const useListingStore = defineStore('listing', {
       this.listings.push(this.listing)
     },
     async updateListingName(name, newName) {
-      this.listing = await axios.put(`/users/listings/${name}`, {
+      this.listing = await axios.put(`/listings/${name}`, {
         newName
       })
     },
     async updateListingOwner(name, newOwner) {
-      this.listing = await axios.put(`/users/listings/${name}`, {
+      this.listing = await axios.put(`/listings/${name}`, {
         newOwner
       })
     },
@@ -69,7 +70,7 @@ export const useListingStore = defineStore('listing', {
       wifi,
       parking }
     ) {
-      this.listing = await axios.put(`/users/listings/${listingName}`, {
+      this.listing = await axios.put(`/listings/${listingName}`, {
         cribOrCotAvailable,
         kitchen,
         kettle,
