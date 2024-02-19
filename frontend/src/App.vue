@@ -25,7 +25,7 @@ export default {
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink v-if="user" to="/account">Your Account</RouterLink>
+        <RouterLink v-if="user" to="/account">Your listings</RouterLink>
         <RouterLink v-if="!user" to="/login">Already a user?</RouterLink>
         <RouterLink v-if="!user" to="/register"> Register</RouterLink>
         <RouterLink v-if="user" to="/logout">Logout</RouterLink>
@@ -39,6 +39,7 @@ export default {
 
 <style scoped>
 header {
+  display: block;
   line-height: 1.5;
   max-height: 100vh;
 }
@@ -69,7 +70,6 @@ nav a:first-of-type {
 
 @media (min-width: 1024px) {
   header {
-    display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
   }
