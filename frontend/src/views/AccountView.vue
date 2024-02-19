@@ -57,7 +57,7 @@ export default {
       const ownerId = this.user.data._id
       await this.createListing(this.newListingBasics[0], ownerId)
       //await this.updateRemainingListingProps(this.newListingAmenities[0])
-      this.$router.push('/')
+      // this.$router.push('/')
     },
     saveAmenities(){
       this.newListingAmenities = []

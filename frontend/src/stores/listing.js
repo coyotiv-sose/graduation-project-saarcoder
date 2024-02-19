@@ -27,6 +27,7 @@ export const useListingStore = defineStore('listing', {
         numOfDoubleBeds,
         ownerId
       })
+      this.listings.push(this.listing)
     },
     async updateListingName(name, newName) {
       this.listing = await axios.put(`/users/listings/${name}`, {
