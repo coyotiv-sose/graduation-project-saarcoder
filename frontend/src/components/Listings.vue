@@ -13,7 +13,7 @@ export default {
     ...mapState(useListingStore, ['listings']),
   },
   methods: {
-    ...mapActions(useListingStore, ['fetchListings', 'createListing', 'updateListingName', 'updateListingOwner', 'updateRemainingListingProps','deleteListing']),
+    ...mapActions(useListingStore, ['fetchListings']),
   },
 }
 </script>
