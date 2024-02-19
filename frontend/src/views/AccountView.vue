@@ -51,11 +51,12 @@ export default {
     ...mapState(useAuthenticationStore, ['user']),
   },
   methods: {
-    ...mapActions(useListingStore, ['fetchListings', 'createListing', 'updateListingName', 'updateListingOwner', 'updateRemainingListingProps','deleteListing']),
+    ...mapActions(useListingStore, ['createListing']),
 
-    async addListing(){
+    async addNewListing(){
       const ownerId = this.user.data._id
-      await this.createListing(this.newListingBasics[0], ownerId)
+      const newListing = this.newListingBasics[0]
+      await this.createListing(newListing, ownerId)
       //await this.updateRemainingListingProps(this.newListingAmenities[0])
       // this.$router.push('/')
     },
@@ -153,7 +154,7 @@ export default {
       </div>
       <br>
       <button @click="saveAmenities" class="btn btn-success btn-sm">Add your amenities</button>
-      <button @click="addListing" class="btn btn-success btn-sm ms-2">Add listing</button>
+      <button @click="addNewListing" class="btn btn-success btn-sm ms-2">Add listing</button>
     </div>
 
 </template>

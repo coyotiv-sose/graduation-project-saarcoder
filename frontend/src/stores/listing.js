@@ -18,17 +18,27 @@ export const useListingStore = defineStore('listing', {
       this.listing = await axios.get(`/listings/${listingId}`)
     },
     async createListing({ name, country, region, place, numOfRooms, numOfBedsInTotal, numOfDoubleBeds }, ownerId) {
-      this.listing = await axios.post('/listings', {
-        name,
-        country,
-        region,
-        place,
-        numOfRooms,
-        numOfBedsInTotal,
-        numOfDoubleBeds,
-        ownerId
-      })
-      this.listings.push(this.listing)
+      try {
+        const response = await axios.post('/listings', {
+          name,
+          country,
+          region,
+          place,
+          numOfRooms,
+          numOfBedsInTotal,
+          numOfDoubleBeds,
+          ownerId
+        })
+
+        if (response.data) {
+          this.listing = response.data
+          this.listings.push(response.data)
+        } else {
+          console.error('listing creation failed')
+        }
+      } catch (error) {
+        console.error('error creating listing', error)
+      }
     },
     async updateListingName(name, newName) {
       this.listing = await axios.put(`/listings/${name}`, {
