@@ -9,7 +9,7 @@ export default {
   },
   data() {
     return {
-      heading: 'Your listings',
+      name: '',
       country: '',
       region: '',
       place: '',
