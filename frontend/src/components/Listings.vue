@@ -3,8 +3,7 @@ import { useListingStore } from '@/stores/listing'
 import { mapState, mapActions } from 'pinia'
 export default {
   async created() {
-    const store = useListingStore()
-    await store.fetchListings()
+    await this.fetchListings()
   },
   data() {
     return {}
